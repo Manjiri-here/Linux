@@ -1,4 +1,4 @@
-Linux architecture
+# Linux architecture
 
 <img width="845" height="776" alt="Screenshot 2025-08-27 at 7 03 49 PM" src="https://github.com/user-attachments/assets/9db838ae-c8c4-4c20-b84e-fab9703de354" />
 
