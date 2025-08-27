@@ -2,7 +2,7 @@ Linux architecture
 
 OS : Software which you load on your hardware to make it do things.
 
-Kernel- Special piece of OS that controls memory, CPU and runs the application.
+Kernel: Special piece of OS that controls memory, CPU and runs the application.
 
 Shell: Interface between user and OS. On CLI you can give one or couple of instrucations at a time, by using script you can giv multiple instructions at a time.
 
