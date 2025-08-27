@@ -6,11 +6,14 @@ $ nproc  ...... command to check the number of CPU cores available
 
 ubuntu@ip-172-31-24-109:~$ nproc
 1
+
 ubuntu@ip-172-31-24-109:~$ free
                total        used        free      shared  buff/cache   available
 Mem:          980368      433736       91160         936      638084      546632
 Swap:              0           0           0
-ubuntu@ip-172-31-24-109:~$ df
+
+
+$ df
 Filesystem     1K-blocks    Used Available Use% Mounted on
 /dev/root        7034376 5506464   1511528  79% /
 tmpfs             490184       0    490184   0% /dev/shm
@@ -19,7 +22,9 @@ tmpfs               5120       0      5120   0% /run/lock
 /dev/xvda16       901520  152308    686084  19% /boot
 /dev/xvda15       106832    6250    100582   6% /boot/efi
 tmpfs              98036      12     98024   1% /run/user/1000
-ubuntu@ip-172-31-24-109:~$ top
+
+
+$ top
 top - 04:23:51 up 2 days, 12:12,  1 user,  load average: 0.00, 0.00, 0.00
 Tasks: 108 total,   1 running, 107 sleeping,   0 stopped,   0 zombie
 %Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 95.3 id,  0.0 wa,  0.0 hi,  0.0 si,  4.0 st
