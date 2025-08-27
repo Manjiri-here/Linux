@@ -15,34 +15,45 @@ Root of all file system. All files/folders start from here. It is super user and
 
 /bin
 All the binaries for essential command which are needed for OS to run are stored here.So ls, curl, cd all these commands the code is kept in bin.
+
 /sbin
-Contains system binaries that are used by root user only. (fdisk, shutdown)  
+Contains system binaries that are used by root user only. (fdisk, shutdown) 
+ 
 /lib
 When your system is starting/booting there are certain set of s/w needed for booting OS thise logics are kept in library.
+
 /home
 Linux can have multiple users, so the user data is stored in home directory. So, per user data is stored here. Each user gets a folder where, for example, your path will be /home/ubuntu, where ubuntu is your user.
-Verdict: Correct. /home indeed holds personal directories for each user, e.g., /home/ubuntu. Wikipedia+1
+Verdict: Correct. /home indeed holds personal directories for each user, e.g., /home/ubuntu. 
+
 /etc
 It contains system-wise files and details. Our username, password, and configuration files for user and system-wide are stored here. It is like settings in windows. It also has network configuration and mount config.
-Verdict: Mostly correct. /etc holds host-specific system configuration files — including user and hostname data, network, and mount configurations like /etc/fstab. Think of it as the system’s central settings hub. WikipediaGeeksforGeeks
+Verdict: Mostly correct. /etc holds host-specific system configuration files — including user and hostname data, network, and mount configurations like /etc/fstab. Think of it as the system’s central settings hub. 
+
 /opt
 If you want to install Chrome, third-party tools or software that you are installing, those will be coming under opt directory. Opt means optional.
-Verdict: Correct. /opt is used for optional, add-on software packages and third-party apps. Wikipedia+1
+Verdict: Correct. /opt is used for optional, add-on software packages and third-party apps.
+
 /var
 Variable data. Whatever events you are doing, the logs of it are stored in this directory. The system and application logs are stored here. It is an important directory for debugging and error solving. Cache emails are also stored here.
-Verdict: Correct. /var stores variable data—logs, caches, emails, spools—that change frequently. This is a key location for troubleshooting. WikipediaAsk Ubuntulinuxjournal.com
+Verdict: Correct. /var stores variable data—logs, caches, emails, spools—that change frequently. This is a key location for troubleshooting.
+
 /tmp
 It is a temporary directory. It can be used by all users. There are some restrictions, but it is a common directory for all the users created in the system. Anything here can be deleted after reboot as it is temporary.
-Verdict: Correct. /tmp is for temporary files, accessible by all users, and generally cleared on reboot. Wikipedialinuxjournal.com
+Verdict: Correct. /tmp is for temporary files, accessible by all users, and generally cleared on reboot. 
+
 /usr
 Unix system resources. It keeps the binaries or software that are only a certain set of users. For example, you have installed Chrome, then your custom software are stored here. Vim etc. will also be coming here. Binaries that are stored here.
-Verdict: Mostly correct: /usr is a secondary hierarchy for (mostly) read-only system software and utilities, shared among all users. Your examples like Vim fit well here. Wikipedialinuxjourney.com
+Verdict: Mostly correct: /usr is a secondary hierarchy for (mostly) read-only system software and utilities, shared among all users. Your examples like Vim fit well here. 
+
 /dev
 Represents devices as files. For example, /dev/sda. /dev/tty means terminal.
-Verdict: Correct. The /dev directory contains device files corresponding to hardware like disks (/dev/sda) and terminals (/dev/tty). GeeksforGeeksServer Fault
+Verdict: Correct. The /dev directory contains device files corresponding to hardware like disks (/dev/sda) and terminals (/dev/tty). 
+
 /mnt and /media
 Places where external devices, USBs get mounted.
-Verdict: Correct. /mnt is commonly used for manually mounted filesystems, while /media is for automatically mounted removable media like USB drives. Wikipedialinuxjournal.com
+Verdict: Correct. /mnt is commonly used for manually mounted filesystems, while /media is for automatically mounted removable media like USB drives. 
+
 /proc and /sys
 These are special virtual directories that shows system info, like running processes, CPU, memory, etc.
 Verdict: Correct. /proc and /sys are virtual filesystems: /proc shows process and kernel info, /sys provides device and kernel parameters.
