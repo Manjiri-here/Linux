@@ -46,6 +46,7 @@ Verdict: Correct. /mnt is commonly used for manually mounted filesystems, while 
 /proc and /sys
 These are special virtual directories that shows system info, like running processes, CPU, memory, etc.
 Verdict: Correct. /proc and /sys are virtual filesystems: /proc shows process and kernel info, /sys provides device and kernel parameters.
+
 ---
 Linux file system-
 In simple terms, the Linux file system is like a giant tree that holds all the files and folders in the computer, starting from a single place called the root, written as /.
