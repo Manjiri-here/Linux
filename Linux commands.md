@@ -1,21 +1,38 @@
 $ ls 
-$ cd
-$ pwd
-$ mkdir
-$ rmdir  ... removes directory if it is empty
-$rm  .. removes file
-$ rm -r .. removes directory recursively
-$ cp  .. copies file or directory
-$ mv .. copies file or directory
-$ cat .. displays content of a file
-$ touch ... used to create a file
-$ more file.txt  .. views contents of a file page by page
-$ less ...same as more but allows backwards navigation and few more advantages. Hence **less** is preferred over **more**
-$ head -n <filename>   ... displays first few lines of a file. By default it displays first 10 lines of a file, but you can specify number using -3, etc
-$ tail -n filename
-$ nano filename   ... text editor like vi
-$ vi filename .. text editor
 
+$ cd
+
+$ pwd
+
+$ mkdir
+
+$ rmdir  ... removes directory if it is empty
+
+$rm  .. removes file
+
+$ rm -r .. removes directory recursively
+
+$ rm -rf .. removes files/directory forcefully. f=forceflly, r=recursive
+
+$ cp  .. copies file or directory
+
+$ mv .. copies file or directory
+
+$ cat .. displays content of a file
+
+$ touch ... used to create a file
+
+$ more file.txt  .. views contents of a file page by page
+
+$ less ...same as more but allows backwards navigation and few more advantages. Hence **less** is preferred over **more**
+
+$ head -n <filename>   ... displays first few lines of a file. By default it displays first 10 lines of a file, but you can specify number using -3, etc
+
+$ tail -n filename
+
+$ nano filename   ... text editor like vi
+
+$ vi filename .. text editor
 
 
 # Commands for system operations:
