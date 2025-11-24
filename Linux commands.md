@@ -19,6 +19,9 @@ $ cp  .. copies file or directory
 $ mv .. copies file or directory
 
 $ cat .. displays content of a file
+$ cat file1 file2  -- prints the contents of both the file on the terminal but keeps them as separate files(does not copy contents of them in any of the files)
+$ cat file1 file2 > file3  -- prints contents of file1 and file2 and copies it to file3
+$ cat file1 file2 >> file3  -- appends the contents of file3 means keeps the existing file contents same and then adds new on top of the contents
 
 $ touch ... used to create a file
 
@@ -26,7 +29,7 @@ $ more file.txt  .. views contents of a file page by page
 
 $ less ...same as more but allows backwards navigation and few more advantages. Hence **less** is preferred over **more**
 
-$ head -n <filename>   ... displays first few lines of a file. By default it displays first 10 lines of a file, but you can specify number using -3, etc
+$ head -n filename   ... displays first few lines of a file. By default it displays first 10 lines of a file, but you can specify number using -3, etc
 
 $ tail -n filename
 
@@ -34,14 +37,31 @@ $ nano filename   ... text editor like vi
 
 $ vi filename .. text editor
 
-
-# Commands for system operations:
-
 $ uname .. displays kernel version , machine name
-
 $ uname -r ... shows kernel version
+$ uname -a .. shows kernel version
+$ man uname
 
-$ top ... shows real time system processes and resource usage
+$ top ... shows list of system processes, Use top when the server is slow right now, or you need to see which process is currently abusing CPU or RAM.
+
+You use <u>top</u> when:
+1) You want to see which process is eating the CPU right now when the system has high latency (means when it is slow)
+2) To check memory leak or RAM pressure
+3) Debug a hung server
+4) Check which user/process is consuming resources.
+
+❌ When NOT to use top
+
+Don’t use top for:
+Historical data
+Deep performance analysis
+Network debugging
+Disk forensic analysis
+Memory leak root cause
+App-level debugging
+
+For these you use:
+htop, ps, pidstat, vmstat, iostat, strace, dmesg.
 
 $ df ... shows disk space usage of file system
 
@@ -54,7 +74,6 @@ $ free -h
 $ uptime .. shows how long the system has been running
 
 $ hostname .. shows the hostname
-
 
 manjiri@Abhis-MacBook-Pro ~ % df -h
 
