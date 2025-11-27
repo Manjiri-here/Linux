@@ -8,11 +8,13 @@ $ mkdir
 
 $ rmdir  ... removes directory if it is empty
 
-$rm  .. removes file
+$rm  .. removes file    
 
-$ rm -r .. removes directory recursively
+$ rm -r .. removes directory recursively   # these -r, -f are flags
 
 $ rm -rf .. removes files/directory forcefully. f=forceflly, r=recursive
+
+% rmdir
 
 $ cp  .. copies file or directory
 
@@ -107,6 +109,27 @@ Abhis-MacBook-Pro.local
 
 manjiri@Abhis-MacBook-Pro ~ % whoami
 manjiri
+
+
+27 November 2025 
+
+$ date 
+
+$ ls -l
+
+$ clear
+
+$ echo "hello dosto" > demofile.txt   # the '>' redirects the output to demofile.txt 
+
+$ echo "hello dosto" >> demofile.txt # the double '>>' modifies, means let the contents of demofile.txt be as it is and adds the text on top of it.
+
+Note: In case you give a file name that doesnt exist then it will create a file and write contents in it.
+
+$ zcat             # It is used to see the contents under zip file
+
+
+
+
 
 
 
