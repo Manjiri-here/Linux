@@ -170,3 +170,10 @@ $ ln linux/demo/file1 hardlink_file1       # This command creates hardlink
 
 Now even if you delete source file the link will not be deleted.
 
+% cut -b 1-2 hardlink_file1      # this cuts bytes(that is why -b flag) 1-2 or 1-4 and prints it.
+
+% echo "hello there" | tee hello.txt      # Tee prints as something on screen as well puts in into a file, in case file does not exist it also creates the file.
+
+% sort file1       # it sorts the contents aplhabetically
+
+$ diff file1 file2     # It gives you difference between two files, and it can take only 2 files as input
