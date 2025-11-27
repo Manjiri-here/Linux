@@ -127,9 +127,46 @@ Note: In case you give a file name that doesnt exist then it will create a file 
 
 $ zcat             # It is used to see the contents under zip file
 
+Note: rmdir does not delete non-empty directores, it deletes only empty directories. So to delete non-empty directories rm -rf is used
+
+% cp demo/file1 cloud/   # this copies file1 under demo folder to cloud folder
+
+% cp -r demo/ cloud/   # this copies demo folder and its contents to cloud folder, hence -r flag is used to copy recursively.
+
+% mv file1 ../demo     # If I want to copy a file to one directory behind
+
+% mv cloud cloud_for_all   # rename file or even folder name in the same way , here folders are renamed. 
+
+% wc file1                      # wc= word count, it gives you how many lines are there , how many words are there and what is size of file (in bytes generally)
+6      20     107 file1         # here 6 lines, 20 words and 107 is the file size
 
 
+# Soft link and hard link
 
+Note: Soft link and hard links are like shortcuts in windows which we have on desktop. Similarly in linux soft link is the one where if we delete the main/source file then the soft link also gets deleted while hard link does not get deleted even when main file is deleted.
 
+% ln -s linux/demo/file1 softlink_file1       # here softlink of file1 is created in softlink_file1 and when you try to print it you get exact same content. Like below. (-s = soft link)
 
+You see l for softlink here in column 1:
+lrwxr-xr-x@  1 manjiri  staff    16 27 Nov 13:25 softlink_file1 -> linux/demo/file1
+
+manjiri@Abhis-MacBook-Pro Devops % cat softlink_file1
+Today is sunny day
+It is winter and November
+Tomorrow I might have two interviews
+hello hi
+
+hello hi again
+
+No if you change contents fo file in the main location or folder than it also gets reflected in the link created:
+
+demo% echo "this file is changed" > file1
+Devops% cat softlink_file1
+this file is changed
+
+Now if we delete the source file then the softlink will also be deleted, the file may exist in the list but it will error if you try to acces it - "cat: softlink_file1: No such file or directory"
+
+$ ln linux/demo/file1 hardlink_file1       # This command creates hardlink
+
+Now even if you delete source file the link will not be deleted.
 
