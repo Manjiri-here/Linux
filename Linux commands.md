@@ -226,4 +226,28 @@ $ rm -r .. removes directory recursively   # these -r, -f are flags
 systemd -  The **service manager itself** (the engine)
 systemctl`- The **command you use to control systemd** 
 
+# 28 November 2025
 
+$ df    # it is used to check how much storage is free and how much is occupied
+
+$ du .   # disk utility, it is used to know which folder, folder under folder and files under it consume how much space/bytes
+
+$ top      # gives all processes
+
+$ ps     # gives info about only bash (sh) processes running
+
+$ fuser   # try practicing this command
+
+$ kill -9 <PID>     # you will get PID of processes using top
+
+$ free -h    # gives information about RAM, how much used, how much free, etc
+
+$ nohup df -h   # it saves output of this command to nohup file. Now even if you save something else or save output after an interval to nohup then it appends the file and doesnt replace its contents
+
+$ head -n 5 nohup
+
+$ tail -n 5 nohup
+
+$ vmstat         # gives virtual machine stats, it gives RAM information
+
+$ vmstat -a      # gives active and non-active ram as well
