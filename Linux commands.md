@@ -8,13 +8,11 @@ $ mkdir
 
 $ rmdir  ... removes directory if it is empty
 
-$rm  .. removes file    
+$rm  .. removes file
 
-$ rm -r .. removes directory recursively   # these -r, -f are flags
+$ rm -r .. removes directory recursively
 
 $ rm -rf .. removes files/directory forcefully. f=forceflly, r=recursive
-
-% rmdir
 
 $ cp  .. copies file or directory
 
@@ -110,70 +108,50 @@ Abhis-MacBook-Pro.local
 manjiri@Abhis-MacBook-Pro ~ % whoami
 manjiri
 
+# 25 November 2025
 
-27 November 2025 
+Note: It is good practice to name log file with .log extension
 
-$ date 
+1) head -n 5 file.log    # This prints the first 5 lines of the file
+2) less file.log      # to read file, less command is easy to scroll up and down than more
+3) awk '' file.log     # inside '' we write the operation we want to perform on file
+For eg- $ awk '{print}' file.log    # this prints the whole file
+$ awk '{print $1, $3, $4}' file.log  # prints only column 1, 3 and 4 of the file.
+$ awk '/INFO/ {print $1 $3}' file.log     # prints lines which contains info
+$ awk '/INFO/ {print $1 $3}' file.log > INFO.txt    # to send the output to INFO.txt file
+$ awk 'INFO {count++} END {print "the count of INFO is: ", count}' file.log
+or we can also use:
+$ awk '/INFO/' file.log| wc -l
+$ awk '$2 >= "08:51:00" && $2 <= "08:51:59" {print $3}' file.log  -- Here we are putting filter on column 2 and then printing column 3(event) for it.
+% awk '$2 >= "08:51:00" && $2 <= "08:51:59" {print $3, $2, $4}' file.log
+% awk 'NR >= 2 && NR <= 10 {print $2}' file.log     -- here NR= number of rows
+% awk 'NR >= 2 && NR <= 10' file.log   -- if we dont use print statement then it prints all rows
 
-$ ls -l
+Note: AWK needs formated values, means either csv or tsv, column by column. If data is not formatted then use sed.
 
-$ clear
+SED (Stream Editor)
 
-$ echo "hello dosto" > demofile.txt   # the '>' redirects the output to demofile.txt 
+Syntax is similar: sed '' file.log
 
-$ echo "hello dosto" >> demofile.txt # the double '>>' modifies, means let the contents of demofile.txt be as it is and adds the text on top of it.
+% sed -n '/INFO/p' file.log    # -n is used to match the exact INFO word or pattern, p is used to print
 
-Note: In case you give a file name that doesnt exist then it will create a file and write contents in it.
+awk works on records which are structured (csv, tsc), while sed works line by line on any structured or unstructured data.
 
-$ zcat             # It is used to see the contents under zip file
+For eg. if you want to replace 'INFO' by 'LOG' then:
 
-Note: rmdir does not delete non-empty directores, it deletes only empty directories. So to delete non-empty directories rm -rf is used
+% sed 's/INFO/LOG/g' file.log   # here g is to replace word globally means throughout the file, while s is substring as we are replacing on a word from a string 
 
-% cp demo/file1 cloud/   # this copies file1 under demo folder to cloud folder
+% sed -n -e '/INFO/=' -e '/INFO/p' file.log    # Here -e is for expression, it is used whenever we are using expression like '=' and -n is for exact match. It finds the lines with INFO word in it and also prints the line as well as line number (= is used to find line number)
 
-% cp -r demo/ cloud/   # this copies demo folder and its contents to cloud folder, hence -r flag is used to copy recursively.
+% sed '1,10 s/INFO/LOG/g' file.log   # we want to replace string with INFO from lines 1 to 10 only, the we give range 1,10 as comma separated
 
-% mv file1 ../demo     # If I want to copy a file to one directory behind
+% sed '1,15 s/INFO/LOG/g'; 1,10p; 11q file.log # means do the operation and also print the lines from 1 to 10 and quit from 11th line.
 
-% mv cloud cloud_for_all   # rename file or even folder name in the same way , here folders are renamed. 
+>> grep - global regular expression pattern , used when you want to match a word line or pattern from whole system or file then this is used
 
-% wc file1                      # wc= word count, it gives you how many lines are there , how many words are there and what is size of file (in bytes generally)
-6      20     107 file1         # here 6 lines, 20 words and 107 is the file size
+% grep INFO file.log   
 
+% grep -i info file.log # -i is flag for case insensitive 
 
-# Soft link and hard link
+% grep -i -c info file.log  # also prints the count of lines which had info in them
 
-Note: Soft link and hard links are like shortcuts in windows which we have on desktop. Similarly in linux soft link is the one where if we delete the main/source file then the soft link also gets deleted while hard link does not get deleted even when main file is deleted.
-
-% ln -s linux/demo/file1 softlink_file1       # here softlink of file1 is created in softlink_file1 and when you try to print it you get exact same content. Like below. (-s = soft link)
-
-You see l for softlink here in column 1:
-lrwxr-xr-x@  1 manjiri  staff    16 27 Nov 13:25 softlink_file1 -> linux/demo/file1
-
-manjiri@Abhis-MacBook-Pro Devops % cat softlink_file1
-Today is sunny day
-It is winter and November
-Tomorrow I might have two interviews
-hello hi
-
-hello hi again
-
-No if you change contents fo file in the main location or folder than it also gets reflected in the link created:
-
-demo% echo "this file is changed" > file1
-Devops% cat softlink_file1
-this file is changed
-
-Now if we delete the source file then the softlink will also be deleted, the file may exist in the list but it will error if you try to acces it - "cat: softlink_file1: No such file or directory"
-
-$ ln linux/demo/file1 hardlink_file1       # This command creates hardlink
-
-Now even if you delete source file the link will not be deleted.
-
-% cut -b 1-2 hardlink_file1      # this cuts bytes(that is why -b flag) 1-2 or 1-4 and prints it.
-
-% echo "hello there" | tee hello.txt      # Tee prints as something on screen as well puts in into a file, in case file does not exist it also creates the file.
-
-% sort file1       # it sorts the contents aplhabetically
-
-$ diff file1 file2     # It gives you difference between two files, and it can take only 2 files as input
