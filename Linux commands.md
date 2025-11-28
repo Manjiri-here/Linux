@@ -223,5 +223,7 @@ $ diff file1 file2     # It gives you difference between two files, and it can t
 
 $ rm -r .. removes directory recursively   # these -r, -f are flags
 
+systemd -  The **service manager itself** (the engine)
+systemctl`- The **command you use to control systemd** 
 
 
