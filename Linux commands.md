@@ -110,7 +110,7 @@ manjiri
 
 # 25 November 2025
 
-Note: It is good practice to name log file with .log extension
+>> Note: It is good practice to name log file with .log extension
 
 1) head -n 5 file.log    # This prints the first 5 lines of the file
 2) less file.log      # to read file, less command is easy to scroll up and down than more
@@ -127,9 +127,9 @@ $ awk '$2 >= "08:51:00" && $2 <= "08:51:59" {print $3}' file.log  -- Here we are
 % awk 'NR >= 2 && NR <= 10 {print $2}' file.log     -- here NR= number of rows
 % awk 'NR >= 2 && NR <= 10' file.log   -- if we dont use print statement then it prints all rows
 
-Note: AWK needs formated values, means either csv or tsv, column by column. If data is not formatted then use sed.
+>> Note: AWK needs formated values, means either csv or tsv, column by column. If data is not formatted then use sed.
 
-SED (Stream Editor)
+# SED (Stream Editor)
 
 Syntax is similar: sed '' file.log
 
