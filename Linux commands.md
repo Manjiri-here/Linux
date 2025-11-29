@@ -251,3 +251,54 @@ $ tail -n 5 nohup
 $ vmstat         # gives virtual machine stats, it gives RAM information
 
 $ vmstat -a      # gives active and non-active ram as well
+
+-----
+
+29 November 2025
+
+-----
+
+$ uname          #gives you kernel 
+
+| Command    | What it shows    | Why you care           |
+| ---------- | ---------------- | ---------------------- |
+| `uname`    | Kernel name      | Basic system check     |
+| `uname -a` | Everything       | Full system identity   |
+| `uname -r` | Kernel version   | Driver & compatibility |
+| `uname -m` | CPU architecture | x86_64 vs arm64        |
+| `uname -n` | Hostname         | Network identity       |
+
+ % uptime                                                             # 
+10:00  up 3 days, 11:27, 2 users, load averages: 2.39 3.45 3.54
+
+% who      # gives list of users and who logged in and when, gives multiple user list and more details
+
+% whoami    # gives the current that is effective username/id only. SO returns only 1 user only
+
+% which terraform                 # gives the location of the application
+/usr/local/bin/terraform
+
+% id                       # gives you list of users and groups on the system
+uid=502(manjiri) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),701(com.apple.sharepoint.group.1),33(_appstore),98(_lpadmin),100(_lpoperator),204
+
+Note: su = super user
+
+So sudo is like making super user do the task as you do not have the permission. It gives you super user permission
+
+% sudo cd root 
+
+manjiri@Abhis-MacBook-Pro /var % shutdown
+shutdown: NOT super-user
+
+But we need to ask papa (the sudo) hence '% sudo shutdown' will work
+
+$ reboot   # it wont reboot as it needs sudo permission
+
+% sudo reboot   # will reboot now
+
+apt, dnf, yum, pacman, portage
+
+apt= application package manager
+
+$ apt install docker.io    # this gives some error as it needs root permission
+$ sudo apt update docker.io -y 
