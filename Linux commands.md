@@ -351,13 +351,60 @@ Now if you do 'cat /etc/passwd' the you will get the list of users and their id'
 ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash
 jethalal:x:1001:1001::/home/jethalal:/bin/sh
 
-# Now in the below way you see id of users and the groups they are a part of
+**Now in the below way you see id of users and the groups they are a part of** 
 
 ubuntu@ip-172-31-71-36:~$ id
+
 uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),24(cdrom),27(sudo),30(dip),105(lxd)
 ubuntu@ip-172-31-71-36:~$ su jethalal
 Password:
 $ id
 uid=1001(jethalal) gid=1001(jethalal) groups=1001(jethalal)
+
+Now if we want to delete a user then below is way:
+
+ubuntu@ip-172-31-71-36:~$ sudo userdel jethalal
+ubuntu@ip-172-31-71-36:~$ su jethalal
+su: user jethalal does not exist or the user entry does not contain all the required fields
+
+** Now suppose we want to create 5 new users and assign 3 of them to dev group and 2 in QA group then follow below steps:
+
+First of all create the users as below:
+
+sudo useradd jethalal
+sudo useradd babita
+sudo useradd tappu
+sudo useradd daya
+sudo useradd bhide
+
+cat /etc/passwd     # to get the list of users 
+cat /etc/group      # and we can see groups using below command/path
+
+sudo groupadd dev        # adding group
+cat /etc/group         # to get the list of groups
+  
+sudo groupadd qa
+cat /etc/group
+
+% sudo gpasswd -a jethalal dev     # -a flag is to append the users and add user to group, so here we are adding jethalal to 'dev' group
+
+   67  cat /etc/group                       
+   69  sudo gpasswd -M babita,tappu  dev      # to add single user we use -a flag but to add multiple users we use -M
+   70  cat /etc/group
+       
+   72  sudo gpasswd -M daya,bhide qa
+   73  cat /etc/group
+   74  sudo gpasswd -aG jethalal qa
+   
+   75  sudo usermod -aG dev jethalal          # if there exists some members in dev group and you want to add another user without deleting the list the this is also a way
+
+   % sudo groupdel qa     # to delete a group
+
+   # User permission:
+
+   others : are users which are neither users nor the part of the group
+
+   % umask   # used to check default file permission of a system
+
 
 
