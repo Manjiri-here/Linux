@@ -298,7 +298,66 @@ $ reboot   # it wont reboot as it needs sudo permission
 
 apt, dnf, yum, pacman, portage
 
+$ which docker   # it will answer your question of where dpcker is installed
+
+$ sudo apt update
+
+$ sudo apt update docker.io    # it is very necessary to run sudo apt update before you try to download any new application, else it will give error like ''
 apt= application package manager
 
 $ apt install docker.io    # this gives some error as it needs root permission
 $ sudo apt update docker.io -y 
+
+Similarly like apt is package installer for ubuntu, dnf is package manager for dnf for centos and rhel and fedora, yum is for centos and redhat, and pacman is for arch linux and manjaro  and portage is for gentoo flavour of linux
+
+RHEL world → dnf / yum
+Arch world → pacman
+Gentoo world → portage
+Redhat -> rpm
+
+>> One of the reasons linux got famous is because we could add multiple users in it
+
+Like in below image, there is a ghar/house which is like our system. sudo is the papa of the system, we need their permission to do anything. And ubuntu and jethalal are its users. We can create multiple users
+
+<img width="972" height="585" alt="Screenshot 2025-11-29 at 19 07 39" src="https://github.com/user-attachments/assets/2bd706a4-37a2-4681-aaec-c6b1e12a6c02" />
+
+How to create new user in linux: (User management in linux)
+
+$ sudo useradd -m jethalal     # here -m is make a directory of this user, as linux follows file system heavily. So only when we provide -m the path like /home/jethalal will be created. Hence important to give that flag
+
+# Now when we go to home directory and do ls we see list of users here
+
+/home$ ls
+jethalal  ubuntu
+
+Now if we want to set password to this user then we can do it as below: 'we use passwd'
+
+$ sudo passwd jethalal
+New password:
+Retype new password:
+passwd: password updated successfully
+
+Now if we want to switch user to jethalal then we do 'su' like below:
+
+% su jethalal # and then it will as for password
+Password:      # enter the password you set
+$ whoami
+jethalal
+
+$ exit    # is used to exit the user
+
+Now if you do 'cat /etc/passwd' the you will get the list of users and their id's, here id is 1001 for jethalal
+
+ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash
+jethalal:x:1001:1001::/home/jethalal:/bin/sh
+
+# Now in the below way you see id of users and the groups they are a part of
+
+ubuntu@ip-172-31-71-36:~$ id
+uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),24(cdrom),27(sudo),30(dip),105(lxd)
+ubuntu@ip-172-31-71-36:~$ su jethalal
+Password:
+$ id
+uid=1001(jethalal) gid=1001(jethalal) groups=1001(jethalal)
+
+
