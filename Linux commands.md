@@ -406,5 +406,36 @@ cat /etc/group
 
    % umask   # used to check default file permission of a system
 
+   If we have to change owner:
+
+   ubuntu@ip-172-31-71-36:~$ sudo chown jethalal file1       # here we are changing owner of file1 to jethalal
+   ubuntu@ip-172-31-71-36:~$ ls -l
+   total 0
+   -rw-rw-r-- 1 jethalal ubuntu 0 Nov 30 04:03 file1
+
+ubuntu@ip-172-31-71-36:~$ sudo chgrp dev file1    # here we changed group to dev for file1
+ubuntu@ip-172-31-71-36:~$ ls -l
+total 0
+-rw-rw-r-- 1 jethalal dev 0 Nov 30 04:03 file1
+
+ubuntu@ip-172-31-71-36:~$ ls
+file1  file2.txt  heythere
+ubuntu@ip-172-31-71-36:~$ zip -r  zip.file heythere/                       # if 
+  adding: heythere/ (stored 0%)
+ubuntu@ip-172-31-71-36:~$ ls -l
+total 12
+-rw-rw-r-- 1 jethalal dev       0 Nov 30 04:03 file1
+-rw-rw-r-- 1 ubuntu   ubuntu   37 Nov 30 04:11 file2.txt
+drwxrwxr-x 2 ubuntu   ubuntu 4096 Nov 30 04:10 heythere
+-rw-rw-r-- 1 ubuntu   ubuntu  168 Nov 30 04:12 zip.file
+ubuntu@ip-172-31-71-36:~$ zip zip.file2 file1
+  adding: file1 (stored 0%)
+ubuntu@ip-172-31-71-36:~$ ls -l
+total 16
+-rw-rw-r-- 1 jethalal dev       0 Nov 30 04:03 file1
+-rw-rw-r-- 1 ubuntu   ubuntu   37 Nov 30 04:11 file2.txt
+drwxrwxr-x 2 ubuntu   ubuntu 4096 Nov 30 04:10 heythere
+-rw-rw-r-- 1 ubuntu   ubuntu  168 Nov 30 04:12 zip.file
+-rw-rw-r-- 1 ubuntu   ubuntu  160 Nov 30 04:13 zip.file2
 
 
