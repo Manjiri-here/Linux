@@ -441,4 +441,15 @@ drwxrwxr-x 2 ubuntu   ubuntu 4096 Nov 30 04:10 heythere
 -rw-rw-r-- 1 ubuntu   ubuntu  168 Nov 30 04:12 zip.file
 -rw-rw-r-- 1 ubuntu   ubuntu  160 Nov 30 04:13 zip.file2
 
+1 Dec 2025
+
+grep by default = basic regular expressions (BRE) → old, limited syntax
+grep -E = extended regular expressions (ERE) → modern, powerful syntax
+grep -E is exactly the same as the command egrep (which is now deprecated)
+
+aws --version | grep -E "aws-cli/2"even plain grep "aws-cli/2" would work, but everyone writes grep -E out of habit because 90 % of the time they also use  or + in the same line. So yes — keep using grep -E. It’s the standard today.
+
+with egrep you can search for more than one strings at the same time. 
+For eg: egrep "key1|key2?\key3" node.sh
+
 
