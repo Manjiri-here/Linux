@@ -452,4 +452,7 @@ aws --version | grep -E "aws-cli/2"even plain grep "aws-cli/2" would work, but e
 with egrep you can search for more than one strings at the same time. 
 For eg: egrep "key1|key2?\key3" node.sh
 
-
+Command,What it removes,Does it delete config files?,Typical use case
+sudo apt remove awscli,Only the program binaries and files,No,Keep config if you plan to reinstall later
+sudo apt remove --purge awscli,Program + all configuration files,Yes,You want a completely clean slate (most common)
+sudo apt purge awscli (shorter version),Exactly the same as remove --purge,Yes,"Same as above, just shorter"
