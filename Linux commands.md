@@ -458,7 +458,7 @@ sudo apt remove --purge awscli,Program + all configuration files,Yes,You want a 
 sudo apt purge awscli (shorter version),Exactly the same as remove --purge,Yes,"Same as above, just shorter"
 
 
-# zip and unzip:
+# zip and unzip: (Remember: zip utility needs to be installed separately)
 
 ~$ zip zip_demo  demo/
   adding: demo/ (stored 0%)
