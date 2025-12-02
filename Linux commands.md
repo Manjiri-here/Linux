@@ -467,4 +467,42 @@ $ unzip zip_demo.zip
 Archive:  zip_demo.zip
    creating: demo/
 
- Note: gzip and gunzip does teh same work of compressing and expanding files or list of files.  
+$ zip -r demo_zip demo         # here we are zipping a folder named demo and naming that zip file as demo_zip, we use -r flag for recursive as we are zipping a folder resursively
+
+ Note: gzip and gunzip does the same work of compressing and expanding files or list of files. In gzip the file extension is gzip and in zip and unzip the extension is zip 
+
+ubuntu@ip-172-31-68-151:~$ tar -cvzf demo.tar.gz demo/        # here c,z,v,f are flags.                                                                   c=compress, v= verbose, z= zip, f=file
+demo/
+ubuntu@ip-172-31-68-151:~$ ls
+aws  awscliv2.zip  demo  demo.tar.gz  zip_demo.zip
+
+We need to give the name of compressed file we want plus the .tar.gz extension. 
+
+ubuntu@ip-172-31-68-151:~/demo1$ tar -xvzf demo.tar.gz
+demo/
+ubuntu@ip-172-31-68-151:~/demo1$ ls
+demo  demo.tar.gz
+ubuntu@ip-172-31-68-151:~/demo1$
+
+Here in above commands to extract we use -x flag. -v is to print the info on screen while zipping or extracting.
+
+# SCP utility: used to copy files bwtween remote machines
+
+<img width="791" height="263" alt="image" src="https://github.com/user-attachments/assets/67e83635-c872-4141-ab66-889a538c483a" />
+
+$ scp -i "path of .pem key" secret_file.txt(source) ubuntu@ec2-3-15-221-86.us-east-2.compute.amazonaws.com: home/ubuntu(destination: which folder to copy in destination)
+
+% scp -i "path to .pem file" -r ubuntu@ec2-3-15-221
+-86.us-east-2.compute.amazonaws.com:/home/ubuntu/linux_for_devops
+
+ % scp -i "/Users/manjiri/Documents/Devops/new-aws-account.pem" /Users/manjiri/Documents/Devops/shell-scripting/quick_installation.sh ubuntu@ec2-18-207-160-88.compute-1.amazonaws.com:/home/ubuntu/scp_test
+quick_installation.sh                                                                                                           100% 9469    46.5KB/s   00:00
+
+% rsync   
+
+Note: rsync is command used to rsync the folder which is already copied to the remote machine but now as there are changes in local we want to rsync it. Google its syntax.
+
+
+
+
+
