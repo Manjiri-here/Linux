@@ -456,3 +456,15 @@ Command,What it removes,Does it delete config files?,Typical use case
 sudo apt remove awscli,Only the program binaries and files,No,Keep config if you plan to reinstall later
 sudo apt remove --purge awscli,Program + all configuration files,Yes,You want a completely clean slate (most common)
 sudo apt purge awscli (shorter version),Exactly the same as remove --purge,Yes,"Same as above, just shorter"
+
+
+# zip and unzip:
+
+~$ zip zip_demo  demo/
+  adding: demo/ (stored 0%)
+
+$ unzip zip_demo.zip
+Archive:  zip_demo.zip
+   creating: demo/
+
+ Note: gzip and gunzip does teh same work of compressing and expanding files or list of files.  
