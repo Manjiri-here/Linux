@@ -504,6 +504,13 @@ quick_installation.sh                                                           
 
 Note: rsync is command used to rsync the folder which is already copied to the remote machine but now as there are changes in local we want to rsync it. Google its syntax.
 
+3 Dec 2025
+
+---
+Question: Difference between ping, curl and wget
+
+say if application is not running, then we try to ping the ec2 server first. It tells if data is being transferred to and from from the server.
+
 
 
 
