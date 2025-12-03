@@ -498,6 +498,8 @@ $ scp -i "path of .pem key" secret_file.txt(source) ubuntu@ec2-3-15-221-86.us-ea
  % scp -i "/Users/manjiri/Documents/Devops/new-aws-account.pem" /Users/manjiri/Documents/Devops/shell-scripting/quick_installation.sh ubuntu@ec2-18-207-160-88.compute-1.amazonaws.com:/home/ubuntu/scp_test
 quick_installation.sh                                                                                                           100% 9469    46.5KB/s   00:00
 
+>> Its important to provide the path in which you want to copy the contents in destination server, means the part after :
+
 % rsync   
 
 Note: rsync is command used to rsync the folder which is already copied to the remote machine but now as there are changes in local we want to rsync it. Google its syntax.
