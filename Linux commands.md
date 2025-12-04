@@ -509,9 +509,27 @@ Note: rsync is command used to rsync the folder which is already copied to the r
 ---
 Question: Difference between ping, curl and wget
 
-say if application is not running, then we try to ping the ec2 server first. It tells if data is being transferred to and from from the server.
+Say if application is not running, then we try to ping the ec2 server first. It tells if data is being transferred to and from from the server.
 
+Zombie process: A child process finishes execution. The OS keeps: PID, Exit code, Resource usage. Parent process is supposed to call wait() to collect that. Parent does NOT call wait().
+Result: Zombie process (state = Z).
+In short- The process is dead. The record of its death is what’s still alive.
 
+What zombies DO and DO NOT do
+
+✅ They do occupy a PID
+❌ They do NOT use CPU
+❌ They do NOT use memory (except 1 tiny table entry)
+❌ They do NOT execute code
+
+So:
+
+One or two zombies = harmless
+Thousands of zombies = PID exhaustion → system can’t spawn new processes → outage
+
+% ps aux | awk '$8=="Z"'
+
+% ps -el | grep Z
 
 
 
