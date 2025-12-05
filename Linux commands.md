@@ -935,3 +935,16 @@ ps -ef | awk '{print $2}'
 ps -ef | grep cron
 
 ps -ef | grep defunct
+
+-----
+
+ # xargs takes input from STDIN and turns it into arguments for another command. Use xargs whenever a command expects arguments but your data comes from a pipe.
+
+ 1) Delete many files
+find . -name "*.log" | xargs rm
+
+2) Kill many PIDs
+ps | grep something | awk '{print $1}' | xargs kill
+
+3) Pass URLs to curl
+cat urls.txt | xargs curl -O
