@@ -860,3 +860,78 @@ $ watch -n 5 mtr trainwithshubham.com
 #nmap
 
 %nmap -v trainwithshubham    # it will scan the network, tell if there are any open ports, -v = verbose
+
+ps aux gives PPID as well. The two commands differ slightly in output columns. 
+
+ps aux → human readable
+ps -ef → scripting + parent-child tracing
+
+You get:
+
+CPU%
+
+MEM%
+
+COMMAND (full command)
+
+TTY
+
+STAT
+
+Example output is compact and easier to scan visually.
+
+Best for:
+
+Quickly spotting high CPU processes
+
+Finding zombies (STAT = Z)
+
+Checking memory hogs
+
+Seeing interactive programs tied to terminals
+
+Use cases
+
+ps aux | grep nginx
+
+ps aux --sort=-%cpu
+
+ps aux | grep Z
+
+----
+
+ps -ef is System V style.
+
+You get:
+
+UID
+
+PID
+
+PPID
+
+Start time
+
+Full command
+
+Exact process hierarchy (parent-child relationships)
+
+It’s more consistent for scripting because fields don’t shift around.
+
+Best for:
+
+kill scripts
+
+finding parent processes
+
+process tree investigation
+
+Use cases
+
+ps -ef | grep java
+
+ps -ef | awk '{print $2}'
+
+ps -ef | grep cron
+
+ps -ef | grep defunct
