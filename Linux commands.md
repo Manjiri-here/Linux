@@ -531,7 +531,332 @@ Thousands of zombies = PID exhaustion → system can’t spawn new processes →
 
 % ps -el | grep Z
 
+---
+5 December 2025
+
+---
+
+** ping  **
+
+What ping actually does
+
+Ping sends ICMP Echo Request packets to a target (ICMP = Internet Control Message Protocol.)
+and waits for ICMP Echo Reply packets in return.
+
+That’s it.
+
+No TCP, no ports, no “checking server health.”
+Just: “Hey, are you there?” → “Yes.”
+
+What ping proves
+
+If ping succeeds:
+
+Network path exists between you and target.
+
+ICMP is allowed by firewalls/security groups.
+
+The target network stack is alive.
+
+Round-trip latency (ms).
+
+What ping does NOT prove
+
+This is where people get it wrong.
+
+Ping does NOT guarantee:
+
+The machine is fully healthy
+
+Any application/port is running
+
+CPU/memory are fine
+
+Disk isn’t full
+
+Website works
+
+SSH will be accessible
+
+Load balancer is OK
+
+AWS EC2 status checks are passed
+
+Ping only checks ICMP replies, nothing more.
+
+Why ping often fails (even when the server is fine)
+
+Because:
+
+Firewalls block ICMP
+
+AWS security groups block ICMP by default
+
+Corporate networks drop ICMP
+
+Some operating systems rate-limit ICMP
+
+Some hosts disable ICMP for “security”
+
+So “no ping” does not always mean “server is down.”
+
+# Netstat:  
+
+Netstat: Show you what network connections, ports, and sockets your system is actually using.
+
+What netstat actually does
+
+It tells you:
+
+Which ports are open
+
+Which processes are using those ports
+
+All active TCP/UDP connections
+
+Routing table
+
+Network interface stats
+
+In short:
+It tells you who is talking to whom, on which port, and over what protocol.
+
+% netstat -tulnp
+t → TCP
+
+u → UDP
+
+l → Listening only
+
+n → Show numbers (no DNS resolution)
+
+p → Which process owns the port
+
+% netstat -ant   # shows active connections
+
+ubuntu@ip-172-31-65-67:~$ netstat
+Command 'netstat' not found, but can be installed with:
+sudo apt install net-tools
+
+ubuntu@ip-172-31-65-67:~$ netstat 
+
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 ip-172-02-99-01.e:38906 ec2-23-13-65-63.co:http TIME_WAIT
+tcp        0     52 ip-172-00-00-97.ec2:ssh 175.43.234.123.ha:55918 ESTABLISHED
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  3      [ ]         SEQPACKET  CONNECTED     3848
+unix  3      [ ]         STREAM     CONNECTED     4184     /run/systemd/journal/stdout
+unix  2      [ ]         DGRAM                    6448     /run/user/1000/systemd/notify
+unix  2      [ ]         DGRAM      CONNECTED     3827
+unix  3      [ ]         STREAM     CONNECTED     4041
+
+netstat -tulnp | grep 9095     # to chek if port is already being used and to check if your servce is actually listening
+
+On modern Ubuntu, netstat is deprecated in favor of ss, which is faster and more accurate.
+
+Equivalent command:
+% ss -tulnp 
+Netid                       State                        Recv-Q                       Send-Q                                                 Local Address:Port                                             Peer Address:Port                      Process
+udp                         UNCONN                       0                            0                                                          127.0.0.1:323                                                   0.0.0.0:*
+
+% ss   # can also be run separately
+
+% ifconfig   # is interface configuration: Shows your network interface details (IP, MAC, status). Show me my network cards and their IP addresses.”
+
+ifconfig is deprecated.
+The modern replacement is:
+% ip a
+
+But people still use ifconfig because it’s simple and familiar.
+
+✔ Private IP ranges (always private)
+
+If the IP starts with any of these, it's private:
+
+10.0.0.0 – 10.255.255.255
+172.16.0.0 – 172.31.255.255
+192.168.0.0 – 192.168.255.255
+
+✔ Everything else is public.
+How to check quickly Just look at the IP shown under inet.
+
+% traceroute linkedin.com  % gives 
+
+% traceroute linkedin.com
+
+Note: Both commands show the exact network path (hops) your packet takes from your machine to a destination (like google.com). They help you see where latency, packet loss, or routing issues are happening.
+
+% mtr google.com      # it is combination of ping+ traceroute , MTR= my trace route. It is used for network troubleshooting.
+
+Why you use mtr (It traces the route to a destination (like traceroute). It continuously pings every hop on that route.)
+
+Use it when:
+
+Sites load slowly and you want to see which hop is causing latency.
+You suspect routing changes or ISP issues.
+You're debugging packet loss on a server.
+You're checking if the problem is your system, your ISP, or the destination.
+
+# nslookup
+
+nslookup is a DNS-debug tool.
+
+1. Convert domain → IP (forward lookup)
+nslookup google.com
 
 
+Output:
+
+DNS server used
+
+IP address of google.com
+
+Use this when:
+
+You want to check if DNS is resolving correctly.
+
+A website isn’t loading and you want to confirm the IP is reachable.
+
+2. Convert IP → domain (reverse lookup)
+nslookup 8.8.8.8
 
 
+This resolves PTR records.
+
+Use this when:
+
+You want to identify who owns an IP.
+
+Debugging server misconfigurations, email issues, logging, etc.
+
+~$ nslookup trainwithshubham.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	trainwithshubham.com
+Address: 15.197.225.128               # this is actual IP address of website
+Name:	trainwithshubham.com
+Address: 3.33.251.168
+
+# Telnet - Does the same task as nslookup
+
+Helps to connect with website, domain and port of an IP. difference is that we add port number in the command.
+
+$ telnet trainwithshubham.com 80
+Trying 15.197.225.128...
+Connected to trainwithshubham.com.
+
+% hostname: gives you IP address of your server
+
+$ cat /etc/hosts - Has all the hosts list
+
+$ ip address show    - shows the IP addresses, Private as well as public.
+
+$ ip # is also command which can be used with flags 
+
+$ iwconfig  # used to see wirless atachments to the server.
+
+Even if we are using wifi it does not show any extensions as we are using EC2. Tr to do it on your server and you can see WiFi extension
+
+$ iwconfig
+lo        no wireless extensions.
+
+ens5      no wireless extensions.
+
+~$ dig trainwithshubham.com           # get in detail network info using 'dig'
+
+; <<>> DiG 9.18.39-0ubuntu0.22.04.2-Ubuntu <<>> trainwithshubham.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 14832
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;trainwithshubham.com.		IN	A
+
+;; ANSWER SECTION:
+trainwithshubham.com.	300	IN	A	15.197.225.128
+trainwithshubham.com.	300	IN	A	3.33.251.168
+
+;; Query time: 4 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Fri Dec 05 08:07:54 UTC 2025
+;; MSG SIZE  rcvd: 81
+
+whois -- This command gives domain information.
+
+$ whois trainwithshubham.com                 
+   Domain Name: TRAINWITHSHUBHAM.COM
+   Registry Domain ID: 2658723068_DOMAIN_COM-VRSN
+   Registrar WHOIS Server: whois.godaddy.com
+   Registrar URL: http://www.godaddy.com
+   Updated Date: 2024-12-04T06:25:14Z
+   Creation Date: 2021-12-01T11:33:03Z
+   Registry Expiry Date: 2026-12-01T11:33:03Z
+   Registrar: GoDaddy.com, LLC
+   Registrar IANA ID: 146
+
+% arp -- # ADdress resolution protocol, it is used to find MAC address of a server
+
+% ifplugstatus  # tells us if your internet interfaces are working or not
+
+$ ifplugstatus
+lo: link beat detected
+ens5: link beat detected
+
+# curl 
+
+CURL is used to call API. 
+
+$ curl -X GET https://dummy.restapiexample.com/api/v1/employees    # GET is used to get the information from an API
+
+jq is plugin tool to butify the curl output.
+
+curl -X GET https://dummy.restapiexample.com/api/v1/employees | jq
+
+# wget
+
+Is used td download a file from internet.
+
+$ wget https://imgs.search.brave.com/dzH3dPFS7ktS-zQ4jlDdVkI91zmnx1OWnJLEthgXCQQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9ibG9n/LmxpcHN1bWh1Yi5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MjQvMTIvc2FtcGxl/LWR1bW15LWFwaS1m/b3ItdGVzdGluZy1s/aXBzdW1odWIuanBn
+
+# Ip tables: 
+
+iptables is the firewall rule engine on Linux. It decides what network traffic is allowed, blocked, or modified. (For more info refere manual and internet while using the comman)
+
+Three core chains matter:
+
+INPUT → traffic coming into the machine
+
+OUTPUT → traffic leaving the machine
+
+FORWARD → traffic passing through the machine (router case)
+
+If a packet matches a rule → the action (ACCEPT, DROP, REJECT) is applied.
+If no rule matches → default policy decides (ACCEPT or DROP).
+
+$ sudo iptables --list-rules
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+
+# watch
+
+You can write it before any command if you want to watch its output every 2 seconds.
+
+You can also change the interval of watch from 2s to 5s using:
+
+$ watch -n 5 top
+
+$ watch top
+
+$ watch -n 5 mtr trainwithshubham.com
+
+#nmap
+
+%nmap -v trainwithshubham    # it will scan the network, tell if there are any open ports, -v = verbose
