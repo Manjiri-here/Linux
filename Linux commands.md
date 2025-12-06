@@ -958,3 +958,12 @@ OR
 du -h| sort -rh| head -10 > large_files.txt
 
 ps -ef| grep defunct| tee zombie.txt| awk '{print $3}' | xargs -r kill -9     # command to find and all all the zombie processes
+
+----
+
+ubuntu@ip-172-31-69-95:~$ top       (number of zombie process can also be checked here as highlighted below)
+top - 03:14:50 up 20 min,  1 user,  load average: 0.00, 0.00, 0.00
+Tasks:  99 total,   1 running,  98 sleeping,   0 stopped,  ** 0 zombie**
+%Cpu(s):  0.2 us,  0.0 sy,  0.0 ni, 99.8 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :    914.0 total,    239.9 free,    204.3 used,    469.8 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.    551.9 avail Mem
