@@ -115,6 +115,8 @@ manjiri
 
 >> Note: It is good practice to name log file with .log extension
 
+Note: The default delimiter for awk is space or tab. If we want to any other symbol as delimiter then provide -F flag. For ex: awk -F ':' '{print $3 "\t" $5}'
+
 1) head -n 5 file.log    # This prints the first 5 lines of the file
 2) less file.log      # to read file, less command is easy to scroll up and down than more
 3) awk '' file.log     # inside '' we write the operation we want to perform on file
