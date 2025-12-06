@@ -948,3 +948,13 @@ ps | grep something | awk '{print $1}' | xargs kill
 
 3) Pass URLs to curl
 cat urls.txt | xargs curl -O
+
+----
+
+Some more commands:
+
+du -h| sort -rh| head -10 | tee large_files.txt   # Find the first 10 biggest files in the file system and write the output to a file.
+OR
+du -h| sort -rh| head -10 > large_files.txt
+
+ps -ef| grep defunct| tee zombie.txt| awk '{print $3}' | xargs -r kill -9     # command to find and all all the zombie processes
