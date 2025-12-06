@@ -975,3 +975,13 @@ To get the OS or kernel details use below commands:
 
 $ hostnamectl
 $ hostname -a
+
+-----
+
+ps aux      # report a snapshot of the current processes, active processes. If you want a repetitive update of the selection and the displayed information, use top instead.
+
+df -h       # gives report file system disk space usage
+
+free -h     # free displays the total amount of free and used physical and swap memory in the system, as well as the buffers and caches used by the kernel
+
+# du -h       ... Summarize disk usage of the set of FILEs, recursively for directories
