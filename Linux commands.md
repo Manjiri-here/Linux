@@ -2,14 +2,18 @@
 
 
 Linux architecture
-Screenshot 2025-08-27 at 7 03 49 PM
+
+<img width="1690" height="1552" alt="image" src="https://github.com/user-attachments/assets/ebde1c94-ac67-4c93-914a-d69dce7af36a" />
+
+<img width="1594" height="896" alt="image" src="https://github.com/user-attachments/assets/c7a00ac1-be97-410e-af30-2291f656b873" />
+
+
 OS : Software which you load on your hardware to make it do things.
 
 Kernel: The Linux kernel acts as a bridge between hardware and applications, managing crucial system tasks like CPU scheduling, memory allocation, device I/O, and process execution.
 
 Shell: Interface between user and OS. On CLI you can give one or couple of instrucations at a time.
 
-Screenshot 2025-08-27 at 6 28 06 PM
 Root (/) Root of all file system. All files/folders start from here. It is super user and has access to entire file system.
 
 /bin All the binaries for essential command which are needed for OS to run are stored here.So ls, curl, cd all these commands the code is kept in bin.
