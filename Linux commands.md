@@ -1,5 +1,74 @@
 <img width="1152" height="1440" alt="image" src="https://github.com/user-attachments/assets/e0492829-e946-4824-9339-82c39207b201" />
 
+✅ 1. Tasks
+Tasks: 104 total, 1 running, 103 sleeping, 0 stopped, 0 zombie
+
+
+104 total → Total number of processes on the system.
+
+1 running → Only 1 process is actively using CPU.
+
+103 sleeping → These processes are idle, waiting for input or events.
+
+0 stopped → Nothing is paused.
+
+0 zombie → Good. No defunct processes waiting for parent cleanup.
+
+If you ever see zombies > 0 → it means parent didn't reap the child.
+
+✅ 2. CPU Usage
+%Cpu(s): 0.0 us, 0.0 sy, 0.0 ni, 100.0 id, 0.0 wa, 0.0 hi, 0.0 si, 0.0 st
+
+
+Breakdown:
+
+us (user) = 0.0% → CPU used by your applications.
+
+sy (system) = 0.0% → CPU used by kernel.
+
+ni (nice) = 0.0% → CPU used by nice-priority processes.
+
+id (idle) = 100.0% → CPU doing nothing.
+
+wa (iowait) = 0.0% → CPU waiting for disk I/O.
+
+hi (hardware interrupts) = 0.0%
+
+si (software interrupts) = 0.0%
+
+st (steal time) = 0.0% → Good. Hypervisor isn't stealing CPU cycles.
+
+👉 Your CPU is basically idle. Nothing is using it.
+
+✅ 3. Memory (RAM)
+MiB Mem : 914.0 total, 219.7 free, 200.8 used, 493.5 buff/cache
+
+
+Interpretation:
+
+914 MB total RAM
+
+200.8 MB used by apps
+
+493.5 MB used for cache/buffers (this is NOT “wasted”—Linux caches aggressively)
+
+219.7 MB actually free
+
+👉 Key point:
+Linux uses extra RAM for caching to speed things up.
+If an app needs RAM, cache will shrink automatically.
+
+So “used” doesn’t mean a problem unless available Mem is low.
+
+✅ 4. Available Memory
+546.7 avail Mem
+
+
+This is the real number you care about.
+
+546 MB is available to applications immediately.
+
+👉 No memory pressure at all.
 
 Linux architecture
 
