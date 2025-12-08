@@ -263,7 +263,7 @@ or we can also use:
 $ awk '/INFO/' file.log| wc -l
 $ awk '$2 >= "08:51:00" && $2 <= "08:51:59" {print $3}' file.log  -- Here we are putting filter on column 2 and then printing column 3(event) for it.
 % awk '$2 >= "08:51:00" && $2 <= "08:51:59" {print $3, $2, $4}' file.log
-% awk 'NR >= 2 && NR <= 10 {print $2}' file.log     -- here NR= number of rows
+% awk 'NR >= 2 && NR <= 10 {print $2}' file.log     -- here NR= number of rows..... It will print the second column ($2) of the file, but only for lines 2 through 10.
 % awk 'NR >= 2 && NR <= 10' file.log   -- if we dont use print statement then it prints all rows
 
 >> Note: AWK needs formated values, means either csv or tsv, column by column. If data is not formatted then use sed.
