@@ -258,7 +258,7 @@ For eg- $ awk '{print}' file.log    # this prints the whole file
 $ awk '{print $1, $3, $4}' file.log  # prints only column 1, 3 and 4 of the file.
 $ awk '/INFO/ {print $1 $3}' file.log     # prints lines which contains info
 $ awk '/INFO/ {print $1 $3}' file.log > INFO.txt    # to send the output to INFO.txt file
-$ awk 'INFO {count++} END {print "the count of INFO is: ", count}' file.log
+$ awk '/INFO/ {count++} END {print "the count of INFO is: ", count}' file.log         .... prints the number of time INFO occurs in file.log
 or we can also use:
 $ awk '/INFO/' file.log| wc -l
 $ awk '$2 >= "08:51:00" && $2 <= "08:51:59" {print $3}' file.log  -- Here we are putting filter on column 2 and then printing column 3(event) for it.
