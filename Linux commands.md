@@ -70,6 +70,55 @@ This is the real number you care about.
 
 👉 No memory pressure at all.
 
+
+----
+
+lsblk — Shows BLOCK DEVICES
+
+It lists hardware-level devices: disks, partitions, LVM volumes.
+
+It does not care whether they are mounted.
+
+It tells you what exists physically/logically, not what is being used.
+
+Think of it as: “What storage devices do I even have?”
+
+Example output:
+
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 100G  0 disk
+├─sda1   8:1    0   1G  0 part /boot
+└─sda2   8:2    0  99G  0 part /
+
+df -h — Shows FILESYSTEM USAGE
+
+It lists mounted filesystems only.
+
+Shows how much space is used/free.
+
+Works at the filesystem layer, not hardware layer.
+
+Think of it as: “How full are the mounted filesystems?”
+
+Example output:
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        99G   70G   20G  78% /
+
+----
+
+| Feature                                | `lsblk` | `df -h`   |
+| -------------------------------------- | ------- | --------- |
+| Shows hardware?                        | Yes     | No        |
+| Shows filesystem usage?                | No      | Yes       |
+| Shows unmounted devices?               | Yes     | No        |
+| Shows actual disk layout?              | Yes     | No        |
+| Good for troubleshooting mount issues? | Yes     | Partially |
+| Good for checking free space?          | No      | Yes       |
+
+
+----
+
 Linux architecture
 
 <img width="1690" height="1552" alt="image" src="https://github.com/user-attachments/assets/ebde1c94-ac67-4c93-914a-d69dce7af36a" />
