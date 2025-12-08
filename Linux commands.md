@@ -333,7 +333,7 @@ Note: Soft link and hard links are like shortcuts in windows which we have on de
 You see l for softlink here in column 1:
 lrwxr-xr-x@  1 manjiri  staff    16 27 Nov 13:25 softlink_file1 -> linux/demo/file1
 
-manjiri@Abhis-MacBook-Pro Devops % cat softlink_file1
+ % cat softlink_file1
 Today is sunny day
 It is winter and November
 Tomorrow I might have two interviews
