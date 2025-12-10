@@ -1,5 +1,17 @@
 <img width="1152" height="1440" alt="image" src="https://github.com/user-attachments/assets/e0492829-e946-4824-9339-82c39207b201" />
 
+$ cut -d':' -f1
+Explanation: 
+cut → command to slice text.
+
+-d':' → tells it use colon as the delimiter.
+
+-f1 → tells it print only field 1 (the text before the first colon).
+
+Example:
+Input: user1:x:1000:/home/user1
+Command prints: user1
+
 ✅ 1. Tasks
 Tasks: 104 total, 1 running, 103 sleeping, 0 stopped, 0 zombie
 
