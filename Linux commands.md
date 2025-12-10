@@ -1171,3 +1171,6 @@ sudo apt autoremove     # Remove unused dependencies
 sudo apt search nginx   # Search for a package
 
 >> Always update before installing: sudo apt update && sudo apt upgrade -y
+
+Task: Run uname -r to check the kernel version on either instance. Compare it to the latest stable version on kernel.org. Why might cloud providers like AWS use older kernels?
+Hint: Consider stability, compatibility with cloud tools, and enterprise support.
