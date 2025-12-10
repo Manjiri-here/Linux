@@ -142,7 +142,7 @@ Root (/) Root of all file system. All files/folders start from here. It is super
 
 /home Linux can have multiple users, so the user data is stored in home directory. So, per user data is stored here. Each user gets a folder where, for example, your path will be /home/ubuntu, where ubuntu is your user. Verdict: Correct. /home indeed holds personal directories for each user, e.g., /home/ubuntu.
 
-/etc It contains system-wise files and details. Our username, password, and configuration files for user and system-wide are stored here. It is like settings in windows. It also has network configuration and mount config. Verdict: Mostly correct. /etc holds host-specific system configuration files — including user and hostname data, network, and mount configurations like /etc/fstab. Think of it as the system’s central settings hub. But people encountered a situation to keep some files which can be a config file or a data file or a socket file or some other files. So they implemented a folder to keep all these files in it and they named it as /etc(As said earlier etcetera). As time passed the meaning of this folder has changed but not the name “etc”. Now /etc folder means a central location for all your configuration files are located and this can be treated as nerve centre of your Linux/Unix machine.
+/etc It contains system-wise files and details. Our username, password, and configuration files for user and system-wide are stored here. It is like settings in windows. It also has network configuration and mount config. /etc holds host-specific system configuration files — including user and hostname data, network, and mount configurations like /etc/fstab. Think of it as the system’s central settings hub. But people encountered a situation to keep some files which can be a config file or a data file or a socket file or some other files. So they implemented a folder to keep all these files in it and they named it as /etc(As said earlier etcetera). As time passed the meaning of this folder has changed but not the name “etc”. Now /etc folder means a central location for all your configuration files are located and this can be treated as nerve centre of your Linux/Unix machine.
 
 /opt If you want to install Chrome, third-party tools or software that you are installing, those will be coming under opt directory. Opt means optional. Verdict: Correct. /opt is used for optional, add-on software packages and third-party apps.
 
@@ -1125,3 +1125,49 @@ df -h       # gives report file system disk space usage
 free -h     # free displays the total amount of free and used physical and swap memory in the system, as well as the buffers and caches used by the kernel
 
 # du -h       ... Summarize disk usage of the set of FILEs, recursively for directories
+
+
+----
+
+10 Dec 2025
+
+---
+
+Think of the Linux kernel as a car's engine 🚗. The engine is the core component that makes the car run and controls all essential functions. But a car isn't just an engine; it needs a body, seats, and a dashboard to be a complete vehicle. That's what a distribution provides.
+
++----------------------------------------------------+
+| User Applications (Vim, Docker, Apache, etc.)     |
++----------------------------------------------------+
+| Shell (Bash, Zsh, Fish, etc.)                     |  <-- Part of the OS
++----------------------------------------------------+
+| System Libraries (glibc, libc, OpenSSL, etc.)     |  <-- Part of the OS
++----------------------------------------------------+
+| System Utilities (ls, grep, systemctl, etc.)      |  <-- Part of the OS
++----------------------------------------------------+
+| Linux Kernel (Process, Memory, FS, Network)       |  <-- Core of the OS
++----------------------------------------------------+
+| Hardware (CPU, RAM, Disk, Network, Peripherals)   |
++----------------------------------------------------+
+
+User Applications and System Utilities:
+
+User Applications: End-user programs like web browsers, text editors (Vim), DevOps tools (Docker, Ansible), and servers (Apache). Interact with the OS via system calls through the shell or GUI.
+
+System Utilities: Core commands (e.g., ls, grep, systemctl) for system interaction, provided by the GNU Project.
+
+File System: Organizes data in a hierarchical structure; everything is a file.
+
+Processes: Running instances of programs, managed by the kernel.
+
+Init System: Manages system startup and services (systemd, SysVinit).
+
+<img width="541" height="736" alt="image" src="https://github.com/user-attachments/assets/2161bbef-cca5-493f-8ea9-17eb577abaca" />
+
+sudo apt update         # Update package lists
+sudo apt upgrade -y     # Upgrade installed packages
+sudo apt install nginx  # Install a package
+sudo apt remove nginx   # Remove a package
+sudo apt autoremove     # Remove unused dependencies
+sudo apt search nginx   # Search for a package
+
+>> Always update before installing: sudo apt update && sudo apt upgrade -y
