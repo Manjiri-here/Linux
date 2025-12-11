@@ -1206,3 +1206,58 @@ Thu Dec 11 07:24:29 UTC 2025
 
 5) $ file /usr/bin/date               # we get to see the file details for date.
 /usr/bin/date: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=ee56cbd6cac8377f099282a93e1a2a56f8bf8492, for GNU/Linux 3.2.0, stripped
+
+-----
+
+This gives list of all internal/default shell commands: compgen -b
+To know which shell you are using use: echo $SHELL   
+
+There are 2 types of commands on linux: 1) Internal commands 2) External commands
+
+External commands have their programs stored on linux , when you do $ which date, you see the path at which the program is stored.
+You do not see directory in which programs are stored for internal commands when you do $which ls.
+
+Some commands are both internal as well as external, so we see its program when we do $which pwd. For eg: $ pwd
+
+<img width="1706" height="786" alt="Command Syntax" src="https://github.com/user-attachments/assets/179fa722-d708-417d-976a-50abbe5a54b4" />
+
+
+<img width="1706" height="573" alt="Pasted Graphic 15" src="https://github.com/user-attachments/assets/107b1316-1ffd-41e9-a28d-bb193a63ab95" />
+
+
+$ who              # who will give you how many users currently logged into system.
+ubuntu   pts/0        2025-12-11 07:13 (116.75.134.171).        - pts is shell session, if user has logged in using shell. SO currently there are 2 users which are logged in through shell in linux.
+ubuntu   pts/1        2025-12-11 07:38 (116.75.59.98)
+
+% whoami           # tells you the users logged in current.
+
+Can be written as $ who am I
+
+tty= teli type terminal
+
+$ cal    # gives you calendar, you will need to install its utility.
+$ cal 2025
+$ cal -m may 
+$ cal -m may 2024
+
+$ echo hello good day!      # echo is used to print, that’s it, nothing else.
+hello good day!
+ As below using ’type’ we can see whether the command is internal (builtin) or external(hashed)
+ubuntu@ip-172-31-69-95:~$ type date
+date is /usr/bin/date
+ubuntu@ip-172-31-69-95:~$ type pwd
+pwd is a shell builtin
+ubuntu@ip-172-31-69-95:
+
+$ which date 				# to find where the date command’s program is saved.
+
+$ sleep 5				# for next 5 seconds the command prompt will do nothing, it is used in scripts mainly, not on commands.
+
+<img width="1706" height="459" alt="Pasted Graphic 16" src="https://github.com/user-attachments/assets/d2b5b1e1-690c-414c-841e-07e9efd22b45" />
+
+￼
+ Ctrl + C —> Is used to abort or stop the execution
+Ctrl + l —> Clear the console (on ubuntu) On Mac Command + R is used to clear.
+
+Ctrl + Shift +C —> Shortcut to copy on ubuntu
+Ctrl + Shift +V —> Shortcut to paste on ubuntu
