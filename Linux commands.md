@@ -3,7 +3,7 @@
 
 Difference between lsblk and df -h:
 
-$ lsblk      #Show me all disks and partitions.Block devices — physical or virtual storage hardware
+$ lsblk      #Show me all disks and partitions.Block devices — physical or virtual storage hardware. It does NOT show usage.
 
 $ df -h      # Mounted filesystems and their disk usage.Show me how much space is used/available on mounted partitions.
 
