@@ -1187,3 +1187,22 @@ sudo apt search nginx   # Search for a package
 
 Task: Run uname -r to check the kernel version on either instance. Compare it to the latest stable version on kernel.org. Why might cloud providers like AWS use older kernels?
 Hint: Consider stability, compatibility with cloud tools, and enterprise support.
+
+----
+11 Dec 2025
+
+----
+1) To know which shell you are using use:
+$ echo $SHELL
+/bin/bash
+
+2) This gives list of all internal/default shell commands (on ubuntu): compgen -b
+
+3) $ which date          # here we get to see where the command binaries are stored using which, you can do it for any command.
+/usr/bin/date
+
+4) $ date
+Thu Dec 11 07:24:29 UTC 2025
+
+5) $ file /usr/bin/date               # we get to see the file details for date.
+/usr/bin/date: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=ee56cbd6cac8377f099282a93e1a2a56f8bf8492, for GNU/Linux 3.2.0, stripped
