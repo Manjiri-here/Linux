@@ -1,5 +1,20 @@
 <img width="1152" height="1440" alt="image" src="https://github.com/user-attachments/assets/e0492829-e946-4824-9339-82c39207b201" />
 
+
+Difference between lsblk and df -h:
+
+$ lsblk      #Show me all disks and partitions.Block devices — physical or virtual storage hardware
+
+$ df -h      # Mounted filesystems and their disk usage.Show me how much space is used/available on mounted partitions.
+
+lsblk = lists disks/partitions (hardware).
+df -h = shows mounted filesystems and their usage (space).
+
+If you attach a new EBS volume:
+
+lsblk will show it immediately.
+df -h will NOT show it until you: format it and mount it
+
 $ cut -d':' -f1
 
 Explanation: 
