@@ -1252,8 +1252,22 @@ tty= teli type terminal
 
 $ cal    # gives you calendar, you will need to install its utility.
 $ cal 2025
+Command 'cal' not found, but can be installed with:
+sudo apt install ncal
+
+Install cal using above command and run below commands:
+$ cal 2025
 $ cal -m may 
 $ cal -m may 2024
+$ cal 2025
+ubuntu@ip-172-31-69-95:~$ cal -m December 2025
+   December 2025
+Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6
+ 7  8  9 10 11 12 13
+14 15 16 17 18 19 20
+21 22 23 24 25 26 27
+28 29 30 31
 
 $ echo hello good day!      # echo is used to print, that’s it, nothing else.
 hello good day!
@@ -1276,3 +1290,14 @@ Ctrl + l —> Clear the console (on ubuntu) On Mac Command + R is used to clea
 
 Ctrl + Shift +C —> Shortcut to copy on ubuntu
 Ctrl + Shift +V —> Shortcut to paste on ubuntu
+---
+12 Dec 2025
+---
+
+$ man -k pass   # this command is used to find relevant command. Means if you dot know a command then you can search for it using the relaveant keyword. Here I wanted to search for password change, hence using pass
+
+$ man -k password
+
+<img width="1453" height="951" alt="image" src="https://github.com/user-attachments/assets/045fe482-3ee6-46b1-9330-fdadd6edcd93" />
+
+
