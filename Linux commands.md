@@ -229,7 +229,7 @@ $ less ...same as more but allows backwards navigation and few more advantages. 
 
 $ head -n filename   ... displays first few lines of a file. By default it displays first 10 lines of a file, but you can specify number using -3, etc
 
-$ tail -n filename
+$ tail -n filename       -- here -n means number of lines
 
 $ nano filename   ... text editor like vi
 
@@ -1298,6 +1298,58 @@ $ man -k pass   # this command is used to find relevant command. Means if you do
 
 $ man -k password
 
+Below are man shortcuts:
 <img width="1453" height="951" alt="image" src="https://github.com/user-attachments/assets/045fe482-3ee6-46b1-9330-fdadd6edcd93" />
 
+Redirection:
+
+Process : running aspect of a program, it is running inside the memory which is stored inside the storage.
+
+<img width="1607" height="925" alt="image" src="https://github.com/user-attachments/assets/204c37e6-5233-43f9-8170-0396a2192b1d" />
+
+Like in below diagram, stdin is by default connected to the keyboard, so it reads our input from keyboard. And stdout and stderr are by default connected to console/terminal, so it displays the ouput there.
+That is why we always get the output or else error for the command we enter on console.
+
+<img width="1424" height="785" alt="image" src="https://github.com/user-attachments/assets/8b19c140-5413-44c4-a078-c1e99b8fd9e2" />
+
+Note: Every command is a program and program becomes process. So Operatng system loader loads the say date program into the memory and converts it into process. And process prints output and once done process gets exited.
+
+> This overrites the file
+>> This appends the file
+
+Now if we want to redirect the error then that can be done using: 2> sign.
+For eg: dat 2> date_error.txt     # Now we know that dat is not a command so this command will give an error. But instead of printing that error on terminal we can redirect it to file.
+
+Remember it will write to that file when the command runs into error.
+
+If you want to disacrd or completely ignore the error and not to print it on console or print it in file we can do that using: 2> /dev/null:
+For eg: dat 2> /dev/null       /dev/null is like black hole in linux.
+
+We can combine the redirect output and redirect error commands like below:
+
+$ > file1 2> file2 - This command redirects stdout to file1 and stderr to file2
+
+$ > file1 2> &1   = This command redirects stdout and stderr to file1
+
+$ >> file1 2> &1   - Thos command redirects stdout and stderr to append to the sme file (file1)
+
+Below diagram shows how pipe (pipeline) command works:
+
+<img width="1424" height="785" alt="image" src="https://github.com/user-attachments/assets/54aa860d-9568-49d2-846a-57be95630aa9" />
+
+Pipe command in Linux. Pipeline allows the output of a process to be manipulated and formatted by another process before it outputs to the terminal. It allows chaining multiple commands to perform complex tasks in a single operation.
+
+The pipe operator is represented by a vertical bar |.
+
+Syntax:
+command1 | command2
+
+command1 is the first command whose output is passed, and command2 is the second command that receives the output of command1 as its input.
+
+Why use pipes?
+
+To process data in steps without intermediate files.
+No need to create temporary files to store data.
+To combine the functionality of multiple commands.
+To create concise and efficient command-line workflows.
 
