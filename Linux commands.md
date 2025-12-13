@@ -352,7 +352,7 @@ Note: rmdir does not delete non-empty directores, it deletes only empty director
 6      20     107 file1         # here 6 lines, 20 words and 107 is the file size
 
 
-# Soft link and hard link
+# Soft link and hard link : Links are pointers to a file in different location.
 
 Note: Soft link and hard links are like shortcuts in windows which we have on desktop. Similarly in linux soft link is the one where if we delete the main/source file then the soft link also gets deleted while hard link does not get deleted even when main file is deleted.
 
