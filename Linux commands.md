@@ -839,6 +839,8 @@ The modern replacement is:
 
 But people still use ifconfig because it’s simple and familiar.
 
+% curl ifconfig.me    # this gives public IP address of the system
+
 ✔ Private IP ranges (always private)
 
 If the IP starts with any of these, it's private:
