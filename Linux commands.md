@@ -1355,3 +1355,5 @@ No need to create temporary files to store data.
 To combine the functionality of multiple commands.
 To create concise and efficient command-line workflows.
 
+echo $USER
+whoami gives username on terminal but if we want to use it as variable value then we use $USER
