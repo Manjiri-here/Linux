@@ -1357,3 +1357,17 @@ To create concise and efficient command-line workflows.
 
 echo $USER
 whoami gives username on terminal but if we want to use it as variable value then we use $USER
+
+---
+
+17 December 2025
+
+----
+To check logs:
+
+sudo journalctl -u jenkins -xe
+
+sudo journalctl -u jenkins --no-pager | tail -100
+ 
+sudo cat /var/log/jenkins/jenkins.log     # If Jenkins is installed via apt
+
