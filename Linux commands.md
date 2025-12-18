@@ -397,6 +397,13 @@ $ rm -r .. removes directory recursively   # these -r, -f are flags
 systemd -  The **service manager itself** (the engine)
 systemctl`- The **command you use to control systemd** 
 
+
+We can view two files side by side as below:
+
+Command used: vi inventory_vars.yaml inventory.ini -O
+
+<img width="1703" height="679" alt="image" src="https://github.com/user-attachments/assets/b401d307-40a4-4746-baa3-73ab7c551ecf" />
+
 # 28 November 2025
 
 $ df    # it is used to check how much storage is free and how much is occupied
