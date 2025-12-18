@@ -1371,3 +1371,10 @@ sudo journalctl -u jenkins --no-pager | tail -100
  
 sudo cat /var/log/jenkins/jenkins.log     # If Jenkins is installed via apt
 
+----
+
+To uninstall packages/applications:
+
+% sudo apt-get purge nginx
+
+% sudo apt-get auto remove
