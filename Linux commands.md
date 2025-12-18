@@ -1377,4 +1377,4 @@ To uninstall packages/applications:
 
 % sudo apt-get purge nginx
 
-% sudo apt-get auto remove
+% sudo apt-get autoremove
