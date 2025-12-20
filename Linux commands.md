@@ -838,6 +838,8 @@ udp                         UNCONN                       0                      
 
 % ss   # can also be run separately
 
+$ sudo lsof -i :8080    -- this gives the application and the port it is using
+
 % ifconfig   # is interface configuration: Shows your network interface details (IP, MAC, status). Show me my network cards and their IP addresses.”
 
 ifconfig is deprecated.
