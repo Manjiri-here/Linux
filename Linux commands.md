@@ -667,6 +667,9 @@ Here in above commands to extract we use -x flag. -v is to print the info on scr
 
 $ scp -i "path of .pem key" secret_file.txt(source) ubuntu@ec2-3-15-221-86.us-east-2.compute.amazonaws.com: home/ubuntu(destination: which folder to copy in destination)
 
+Remember: The ssh file/folder is not created by the installation, but upon the first use of ssh or ssh-keygen. If it is not there, there is nothing to worry about. You can simply create it using mkdir ~/.ssh/.
+Check here for the .ssh directory in here /home/your-username/.ssh. So to find it do ls -a | grep .ssh in your current location as seen in the image.
+
 % scp -i "path to .pem file" -r ubuntu@ec2-3-15-221
 -86.us-east-2.compute.amazonaws.com:/home/ubuntu/linux_for_devops
 
