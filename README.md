@@ -5,15 +5,18 @@ $ ps -ef    ....to check the runing processes
 $ nproc  ...... command to check the number of CPU cores available 
 
 ubuntu@ip-172-31-24-109:~$ nproc
+
 1
 
 ubuntu@ip-172-31-24-109:~$ free
+
                total        used        free      shared  buff/cache   available
 Mem:          980368      433736       91160         936      638084      546632
 Swap:              0           0           0
 
 
 $ df
+
 Filesystem     1K-blocks    Used Available Use% Mounted on
 /dev/root        7034376 5506464   1511528  79% /
 tmpfs             490184       0    490184   0% /dev/shm
@@ -25,6 +28,7 @@ tmpfs              98036      12     98024   1% /run/user/1000
 
 
 $ top
+
 top - 04:23:51 up 2 days, 12:12,  1 user,  load average: 0.00, 0.00, 0.00
 Tasks: 108 total,   1 running, 107 sleeping,   0 stopped,   0 zombie
 %Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 95.3 id,  0.0 wa,  0.0 hi,  0.0 si,  4.0 st
@@ -68,3 +72,14 @@ MiB Swap:      0.0 total,      0.0 free,      0.0 used.    534.2 avail Mem
      37 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-ata_s
      38 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-md
      39 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-md_bi
+
+
+Error: Docker containers were not getting created due to insufficient space.
+
+Troubelshooting steps:
+
+Checked disk space: df -h -> /dev/root was 100% used
+Then to find what is consuming the space ran: du -xh / --max-depth=1 | sort -rh -> This command checks in root (/) which directories are consuming highest size and lists them
+.minikube and .kube were consuming the most space. Almost 90%. -> I was not actively using minikube hence deleted it, removed its dependent directories.
+Then containerd in /var/lib folder was consuming lot of space around 2.9G, deleted it using - docker system prune -a --volumes -> THis freed lot of space.
+Note: To get into var , containerd, etc root permissions are needed. You can go into root using : sudo -i
