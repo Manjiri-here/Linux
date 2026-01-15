@@ -1394,3 +1394,10 @@ To uninstall packages/applications:
 To copy contents of a directory to current directory we can use below command:
 
 % cp ../user-service/* .
+
+# to troubleshoot if service/app is facing issues in starting- if error seen in 'sudo systemctl status jenkins'
+
+% sudo journalctl -u jenkins -xe --no-pager | tail -50
+
+% sudo cat /var/log/jenkins/jenkins.log | tail -50
+
