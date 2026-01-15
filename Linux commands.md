@@ -1390,3 +1390,7 @@ To uninstall packages/applications:
 % sudo apt-get purge nginx
 
 % sudo apt-get autoremove
+
+To copy contents of a directory to current directory we can use below command:
+
+% cp ../user-service/* .
