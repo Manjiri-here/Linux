@@ -3,83 +3,62 @@
 
 Difference between lsblk and df -h:
 
-$ lsblk      #Show me all disks and partitions.Block devices — physical or virtual storage hardware. It does NOT show usage.
-
-$ df -h      # Mounted filesystems and their disk usage.Show me how much space is used/available on mounted partitions.
-
-lsblk = lists disks/partitions (hardware).
-df -h = shows mounted filesystems and their usage (space).
-
-If you attach a new EBS volume:
-
-lsblk will show it immediately.
-df -h will NOT show it until you: format it and mount it
+$ lsblk      #Show me all disks and partitions.Block devices — physical or virtual storage hardware. It does NOT show usage.If you attach a new EBS volume lsblk will show it immediately.
+$ df -h      # Mounted filesystems and their disk usage.Show me how much space is used/available on mounted partitions. If you attach a new EBS volume df -h will NOT show it until you: format it and mount it
 
 $ cut -d':' -f1
-
 Explanation: 
 cut → command to slice text.
-
 -d':' → tells it use colon as the delimiter.
-
 -f1 → tells it print only field 1 (the text before the first colon).
-
 Example:
 Input: user1:x:1000:/home/user1
-Command prints: user1
+Command($ cut -d':' -f1) prints : user1
 
 ✅ 1. Tasks
 Tasks: 104 total, 1 running, 103 sleeping, 0 stopped, 0 zombie
-
-
+Meaning of each field:
 104 total → Total number of processes on the system.
-
 1 running → Only 1 process is actively using CPU.
-
 103 sleeping → These processes are idle, waiting for input or events.
-
 0 stopped → Nothing is paused.
-
 0 zombie → Good. No defunct processes waiting for parent cleanup.
-
 If you ever see zombies > 0 → it means parent didn't reap the child.
 
 ✅ 2. CPU Usage
 %Cpu(s): 0.0 us, 0.0 sy, 0.0 ni, 100.0 id, 0.0 wa, 0.0 hi, 0.0 si, 0.0 st
 
-
 Breakdown:
 
 us (user) = 0.0% → CPU used by your applications.
-
 sy (system) = 0.0% → CPU used by kernel.
-
 ni (nice) = 0.0% → CPU used by nice-priority processes.
-
 id (idle) = 100.0% → CPU doing nothing.
-
 wa (iowait) = 0.0% → CPU waiting for disk I/O.
-
 hi (hardware interrupts) = 0.0%
-
 si (software interrupts) = 0.0%
-
 st (steal time) = 0.0% → Good. Hypervisor isn't stealing CPU cycles.
 
 👉 Your CPU is basically idle. Nothing is using it.
 
+Nice value is a user-space parameter in Linux that influences a process's scheduling priority, determining how much CPU time it receives relative to other processes.  It ranges from -20 (highest priority, least "nice") to +19 (lowest priority, most "nice").  A lower nice value means the process gets more CPU time, while a higher value makes it less demanding on the system, allowing other processes to run more freely. 
+The actual priority used by the Linux kernel (often shown as "PR" or "PRI" in tools like top) is derived from the nice value using the formula:
+Priority = 20 + Nice
+For normal user processes, this results in a priority range of 100 to 139, where lower numbers indicate higher priority. 
+While nice values are user-controllable, only the root user can set negative nice values (e.g., -20) to achieve high priority.  Regular users can only increase (make less urgent) the nice value up to +19. 
+Default nice value: 0
+Highest priority: nice = -20 → priority = 0
+Lowest priority: nice = +19 → priority = 39
+Real-time processes use a separate priority range (0–99), where higher numbers mean higher priority. 
+Use nice to start a process with a specific nice value and renice to change the nice value of a running process. 
+
 ✅ 3. Memory (RAM)
 MiB Mem : 914.0 total, 219.7 free, 200.8 used, 493.5 buff/cache
 
-
 Interpretation:
-
 914 MB total RAM
-
 200.8 MB used by apps
-
 493.5 MB used for cache/buffers (this is NOT “wasted”—Linux caches aggressively)
-
 219.7 MB actually free
 
 👉 Key point:
