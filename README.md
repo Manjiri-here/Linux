@@ -1,3 +1,3 @@
 # Linux
 
-More about linux in 'Linux fundamentals' file.
+More about linux in 'Linux fundamentals'.
