@@ -4,7 +4,31 @@
 Difference between lsblk and df -h:
 
 $ lsblk      #Show me all disks and partitions.Block devices — physical or virtual storage hardware. It does NOT show usage.If you attach a new EBS volume lsblk will show it immediately.
+lsblk — Shows BLOCK DEVICES
+
+It lists hardware-level devices: disks, partitions, LVM volumes. It does not care whether they are mounted.It tells you what exists physically/logically, not what is being used. Think of it as: “What storage devices do I even have?”
+Example output:
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 100G  0 disk
+├─sda1   8:1    0   1G  0 part /boot
+└─sda2   8:2    0  99G  0 part /
+
 $ df -h      # Mounted filesystems and their disk usage.Show me how much space is used/available on mounted partitions. If you attach a new EBS volume df -h will NOT show it until you: format it and mount it
+. Shows FILESYSTEM USAGE
+
+It lists mounted filesystems only.Shows how much space is used/free. Works at the filesystem layer, not hardware layer. Think of it as: “How full are the mounted filesystems?”
+Example output:
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        99G   70G   20G  78% /
+
+| Feature                                | `lsblk` | `df -h`   |
+| -------------------------------------- | ------- | --------- |
+| Shows hardware?                        | Yes     | No        |
+| Shows filesystem usage?                | No      | Yes       |
+| Shows unmounted devices?               | Yes     | No        |
+| Shows actual disk layout?              | Yes     | No        |
+| Good for troubleshooting mount issues? | Yes     | Partially |
+| Good for checking free space?          | No      | Yes       |
 
 $ cut -d':' -f1
 Explanation: 
@@ -51,6 +75,11 @@ Highest priority: nice = -20 → priority = 0
 Lowest priority: nice = +19 → priority = 39
 Real-time processes use a separate priority range (0–99), where higher numbers mean higher priority. 
 Use nice to start a process with a specific nice value and renice to change the nice value of a running process. 
+The %nice in system monitoring tools like top or iostat represents the percentage of CPU time spent executing user-level processes with a positive nice value (i.e., lower priority, "nicer" to other processes). It does not represent the nice value itself as a percentage.
+
+%nice = 0%: No CPU time is being used by low-priority (niced) processes.
+High %nice: A significant portion of CPU time is used by background or low-priority tasks (e.g., batch jobs, backups), meaning the system is handling non-urgent work without affecting interactive performance.
+This metric helps distinguish between CPU load from critical processes (user/system) and less important ones (nice), aiding in performance analysis.
 
 ✅ 3. Memory (RAM)
 MiB Mem : 914.0 total, 219.7 free, 200.8 used, 493.5 buff/cache
@@ -69,60 +98,10 @@ So “used” doesn’t mean a problem unless available Mem is low.
 
 ✅ 4. Available Memory
 546.7 avail Mem
-
-
 This is the real number you care about.
-
 546 MB is available to applications immediately.
 
 👉 No memory pressure at all.
-
-
-----
-
-lsblk — Shows BLOCK DEVICES
-
-It lists hardware-level devices: disks, partitions, LVM volumes.
-
-It does not care whether they are mounted.
-
-It tells you what exists physically/logically, not what is being used.
-
-Think of it as: “What storage devices do I even have?”
-
-Example output:
-
-NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-sda      8:0    0 100G  0 disk
-├─sda1   8:1    0   1G  0 part /boot
-└─sda2   8:2    0  99G  0 part /
-
-df -h — Shows FILESYSTEM USAGE
-
-It lists mounted filesystems only.
-
-Shows how much space is used/free.
-
-Works at the filesystem layer, not hardware layer.
-
-Think of it as: “How full are the mounted filesystems?”
-
-Example output:
-
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/sda2        99G   70G   20G  78% /
-
-----
-
-| Feature                                | `lsblk` | `df -h`   |
-| -------------------------------------- | ------- | --------- |
-| Shows hardware?                        | Yes     | No        |
-| Shows filesystem usage?                | No      | Yes       |
-| Shows unmounted devices?               | Yes     | No        |
-| Shows actual disk layout?              | Yes     | No        |
-| Good for troubleshooting mount issues? | Yes     | Partially |
-| Good for checking free space?          | No      | Yes       |
-
 
 ----
 
@@ -147,33 +126,28 @@ Root (/) Root of all file system. All files/folders start from here. It is super
 
 /lib When your system is starting/booting there are certain set of s/w needed for booting OS thise logics are kept in library.
 
-/home Linux can have multiple users, so the user data is stored in home directory. So, per user data is stored here. Each user gets a folder where, for example, your path will be /home/ubuntu, where ubuntu is your user. Verdict: Correct. /home indeed holds personal directories for each user, e.g., /home/ubuntu.
+/home Linux can have multiple users, so the user data is stored in home directory. So, per user data is stored here. Each user gets a folder where, for example, your path will be /home/ubuntu, where ubuntu is your user.
 
 /etc It contains system-wise files and details. Our username, password, and configuration files for user and system-wide are stored here. It is like settings in windows. It also has network configuration and mount config. /etc holds host-specific system configuration files — including user and hostname data, network, and mount configurations like /etc/fstab. Think of it as the system’s central settings hub. But people encountered a situation to keep some files which can be a config file or a data file or a socket file or some other files. So they implemented a folder to keep all these files in it and they named it as /etc(As said earlier etcetera). As time passed the meaning of this folder has changed but not the name “etc”. Now /etc folder means a central location for all your configuration files are located and this can be treated as nerve centre of your Linux/Unix machine.
 
-/opt If you want to install Chrome, third-party tools or software that you are installing, those will be coming under opt directory. Opt means optional. Verdict: Correct. /opt is used for optional, add-on software packages and third-party apps.
+/opt If you want to install Chrome, third-party tools or software that you are installing, those will be coming under opt directory. /opt is used for optional, add-on software packages and third-party apps.
 
-/var Variable data. Whatever events you are doing, the logs of it are stored in this directory. The system and application logs are stored here. It is an important directory for debugging and error solving. Cache emails are also stored here. Verdict: Correct. /var stores variable data—logs, caches, emails, spools—that change frequently. This is a key location for troubleshooting.
+/var Variable data. Whatever events you are doing, the logs of it are stored in this directory. The system and application logs are stored here. It is an important directory for debugging and error solving. Cache emails are also stored here. /var stores variable data—logs, caches, emails, spools—that change frequently. This is a key location for troubleshooting.
 
-/tmp It is a temporary directory. It can be used by all users. There are some restrictions, but it is a common directory for all the users created in the system. Anything here can be deleted after reboot as it is temporary. Verdict: Correct. /tmp is for temporary files, accessible by all users, and generally cleared on reboot.
+/tmp It is a temporary directory. It can be used by all users. There are some restrictions, but it is a common directory for all the users created in the system. Anything here can be deleted after reboot as it is temporary. /tmp is for temporary files, accessible by all users, and generally cleared on reboot.
 
-/usr Unix system resources. It keeps the binaries or software that are only a certain set of users. For example, you have installed Chrome, then your custom software are stored here. Vim etc. will also be coming here. Binaries that are stored here. Verdict: Mostly correct: /usr is a secondary hierarchy for (mostly) read-only system software and utilities, shared among all users. Your examples like Vim fit well here.
+/usr Unix system resources. It keeps the binaries or software that are only a certain set of users. For example, you have installed Chrome, then your custom software are stored here. Vim etc. will also be coming here. Binaries that are stored here. /usr is a secondary hierarchy for (mostly) read-only system software and utilities, shared among all users. Your examples like Vim fit well here.(It is different directory from 'User')
 
-/dev Represents devices as files. For example, /dev/sda. /dev/tty means terminal. Verdict: Correct. The /dev directory contains device files corresponding to hardware like disks (/dev/sda) and terminals (/dev/tty).
+/dev Represents devices as files. For example, /dev/sda. /dev/tty means terminal. The /dev directory contains device files corresponding to hardware like disks (/dev/sda) and terminals (/dev/tty).
 
 /mnt and /media Places where external devices, USBs get mounted. Verdict: Correct. /mnt is commonly used for manually mounted filesystems, while /media is for automatically mounted removable media like USB drives.
 
-/proc and /sys These are special virtual directories that shows system info, like running processes, CPU, memory, etc. Verdict: Correct. /proc and /sys are virtual filesystems: /proc shows process and kernel info, /sys provides device and kernel parameters.
+/proc and /sys These are special virtual directories that shows system info, like running processes, CPU, memory, etc. /proc and /sys are virtual filesystems: /proc shows process and kernel info, /sys provides device and kernel parameters.
 
-Linux file system- In simple terms, the Linux file system is like a giant tree that holds all the files and folders in the computer, starting from a single place called the root, written as /.
-
-How It Works One Big Tree: Imagine a tree with a trunk (the root /). Branches grow from it, like main folders (/home for users, /etc for settings), and leaves are the files.
-
+Linux file system- In simple terms, the Linux file system is like a giant tree that holds all the files and folders in the computer, starting from a single place called the root, written as /. How It Works One Big Tree: Imagine a tree with a trunk (the root /). Branches grow from it, like main folders (/home for users, /etc for settings), and leaves are the files.
 No Drive Letters: Unlike Windows with C: and D:, Linux puts everything together into this one tree. Hard drives, USB sticks, and more--all their files fit under this same root.
 
-Everything is a File: In Linux, not just documents are files, but things like printers and parts of the computer itself act like files too.
-
-Folders for Jobs: Each important folder has a special job, like /home for personal stuff, /bin for programs, /tmp for temporary files, and /etc for computer settings
+Everything is a File: In Linux, not just documents are files, but things like printers and parts of the computer itself act like files too. Folders for Jobs: Each important folder has a special job, like /home for personal stuff, /bin for programs, /tmp for temporary files, and /etc for computer settings
 
 $ ls 
 
@@ -191,9 +165,22 @@ $ rm -r .. removes directory recursively
 
 $ rm -rf .. removes files/directory forcefully. f=forceflly, r=recursive
 
-$ cp  .. copies file or directory
+Note: rmdir does not delete non-empty directores, it deletes only empty directories. So to delete non-empty directories rm -rf is used
 
-$ mv .. copies file or directory
+$ cp  .. copies file or directory, just for directory to be copied recursively we use -r flag for directories
+
+$ mv .. copies/renames file or directory
+
+% cp demo/file1 cloud/   # this copies file1 under demo folder to cloud folder
+
+% cp -r demo/ cloud/   # this copies demo folder and its contents to cloud folder, hence -r flag is used to copy recursively.
+
+% mv file1 ../demo     # If I want to copy a file to one directory behind
+
+% mv cloud cloud_for_all   # rename file or even folder name in the same way , here folders are renamed. 
+
+% wc file1                      # wc= word count, it gives you how many lines are there , how many words are there and what is size of file (in bytes generally)
+6      20     107 file1         # here 6 lines, 20 words and 107 is the file size
 
 $ cat .. displays content of a file
 $ cat file1 file2  -- prints the contents of both the file on the terminal but keeps them as separate files(does not copy contents of them in any of the files)
@@ -214,10 +201,11 @@ $ nano filename   ... text editor like vi
 
 $ vi filename .. text editor
 
-$ uname .. displays kernel version , machine name
+$ uname .. displays kernel version, machine name
 $ uname -r ... shows kernel version
 $ uname -a .. shows kernel version
 $ man uname
+$ hostname .. shows the hostname
 
 $ top ... shows list of system processes, Use top when the server is slow right now, or you need to see which process is currently abusing CPU or RAM.
 
@@ -250,13 +238,15 @@ $ free -h
 
 $ uptime .. shows how long the system has been running
 
-$ hostname .. shows the hostname
-
 # 25 November 2025
 
 >> Note: It is good practice to name log file with .log extension
 
 Note: The default delimiter for awk is space or tab. If we want to any other symbol as delimiter then provide -F flag. For ex: awk -F ':' '{print $3 "\t" $5}'
+Here "\t" is how we want to separate the fields while orinting them.
+% df -h| awk '{print $3  "\t" $5}'
+% df -h| awk '{print $3  " " $5}'
+% df -h| awk '{print $3  ", " $5}'
 
 1) head -n 5 file.log    # This prints the first 5 lines of the file
 2) less file.log      # to read file, less command is easy to scroll up and down than more
@@ -273,15 +263,13 @@ $ awk '$2 >= "08:51:00" && $2 <= "08:51:59" {print $3}' file.log  -- Here we are
 % awk 'NR >= 2 && NR <= 10 {print $2}' file.log     -- here NR= number of rows..... It will print the second column ($2) of the file, but only for lines 2 through 10.
 % awk 'NR >= 2 && NR <= 10' file.log   -- if we dont use print statement then it prints all rows
 
->> Note: AWK needs formated values, means either csv or tsv, column by column. If data is not formatted then use sed.
+>> Note: AWK needs formated values or records which are structured, means either csv or tsv, column by column. If data is not formatted then use sed. Sed works line by line on any structured or unstructured data.
 
 # SED (Stream Editor)
 
 Syntax is similar: sed '' file.log
 
 % sed -n '/INFO/p' file.log    # -n is used to match the exact INFO word or pattern, p is used to print
-
-awk works on records which are structured (csv, tsc), while sed works line by line on any structured or unstructured data.
 
 For eg. if you want to replace 'INFO' by 'LOG' then:
 
@@ -293,13 +281,13 @@ For eg. if you want to replace 'INFO' by 'LOG' then:
 
 % sed '1,15 s/INFO/LOG/g'; 1,10p; 11q file.log # means do the operation and also print the lines from 1 to 10 and quit from 11th line.
 
->> grep - global regular expression pattern , used when you want to match a word line or pattern from whole system or file then this is used
+>> grep - global regular expression pattern , used when you want to match a word, line or pattern from whole system or file then this is used
 
 % grep INFO file.log   
 
 % grep -i info file.log # -i is flag for case insensitive 
 
-% grep -i -c info file.log  # also prints the count of lines which had info in them
+% grep -i -c info file.log  # -c also prints the count of lines which had info in them
 
 # 27 November 2025
 
@@ -316,20 +304,6 @@ $ echo "hello dosto" >> demofile.txt # the double '>>' modifies, means let the c
 Note: In case you give a file name that doesnt exist then it will create a file and write contents in it.
 
 $ zcat             # It is used to see the contents under zip file
-
-Note: rmdir does not delete non-empty directores, it deletes only empty directories. So to delete non-empty directories rm -rf is used
-
-% cp demo/file1 cloud/   # this copies file1 under demo folder to cloud folder
-
-% cp -r demo/ cloud/   # this copies demo folder and its contents to cloud folder, hence -r flag is used to copy recursively.
-
-% mv file1 ../demo     # If I want to copy a file to one directory behind
-
-% mv cloud cloud_for_all   # rename file or even folder name in the same way , here folders are renamed. 
-
-% wc file1                      # wc= word count, it gives you how many lines are there , how many words are there and what is size of file (in bytes generally)
-6      20     107 file1         # here 6 lines, 20 words and 107 is the file size
-
 
 # Soft link and hard link : Links are pointers to a file in different location.
 
@@ -348,13 +322,13 @@ hello hi
 
 hello hi again
 
-No if you change contents fo file in the main location or folder than it also gets reflected in the link created:
+Now if you change contents fo file in the main location or folder than it also gets reflected in the link created:
 
-demo% echo "this file is changed" > file1
-Devops% cat softlink_file1
+% echo "this file is changed" > file1
+% cat softlink_file1
 this file is changed
 
-Now if we delete the source file then the softlink will also be deleted, the file may exist in the list but it will error if you try to acces it - "cat: softlink_file1: No such file or directory"
+Now if we delete the source file then the softlink will also be deleted, the file may exist in the list but it will give error if you try to acces it - "cat: softlink_file1: No such file or directory"
 
 $ ln linux/demo/file1 hardlink_file1       # This command creates hardlink
   Now even if you delete source file the link will not be deleted.
@@ -365,13 +339,11 @@ cut:remove sections from each line of files
 
 % cut -b 1-2 hardlink_file1      # this cuts bytes(that is why -b flag) 1-2 or 1-4 and prints it.
 
-% echo "hello there" | tee hello.txt      # Tee prints as something on screen as well puts in into a file, in case file does not exist it also creates the file.
+% echo "hello there" | tee hello.txt      # Tee prints "hello there" on screen as well puts in into a file, in case file does not exist it also creates the file.
 
 % sort file1       # it sorts the contents aplhabetically
 
 $ diff file1 file2     # It gives you difference between two files, and it can take only 2 files as input
-
-$ rm -r .. removes directory recursively   # these -r, -f are flags
 
 systemd -  The **service manager itself** (the engine)
 systemctl`- The **command you use to control systemd** 
@@ -400,10 +372,6 @@ $ kill -9 <PID>     # you will get PID of processes using top
 $ free -h    # gives information about RAM, how much used, how much free, etc
 
 $ nohup df -h   # it saves output of this command to nohup file. Now even if you save something else or save output after an interval to nohup then it appends the file and doesnt replace its contents
-
-$ head -n 5 nohup
-
-$ tail -n 5 nohup
 
 $ vmstat         # gives virtual machine stats, it gives RAM information
 
@@ -434,6 +402,7 @@ $ uname          #gives you kernel
 
 % which terraform                 # gives the location of the application
 /usr/local/bin/terraform
+$ which docker   # it will answer your question of where docker is installed
 
 % id                       # gives you list of users and groups on the system
 uid=502(manjiri) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),701(com.apple.sharepoint.group.1),33(_appstore),98(_lpadmin),100(_lpoperator),204
@@ -453,19 +422,17 @@ $ reboot   # it wont reboot as it needs sudo permission
 
 % sudo reboot   # will reboot now
 
-apt, dnf, yum, pacman, portage
-
-$ which docker   # it will answer your question of where dpcker is installed
+apt, dnf, yum, pacman, portage: They are all package manager for different distributions/flavours of linux
 
 $ sudo apt update
 
-$ sudo apt update docker.io    # it is very necessary to run sudo apt update before you try to download any new application, else it will give error like ''
+$ sudo apt update docker.io    # it is very necessary to run sudo apt update before you try to download any new application, else it will give error.
 apt= application package manager
 
 $ apt install docker.io    # this gives some error as it needs root permission
 $ sudo apt update docker.io -y 
 
-Similarly like apt is package installer for ubuntu, dnf is package manager for dnf for centos and rhel and fedora, yum is for centos and redhat, and pacman is for arch linux and manjaro  and portage is for gentoo flavour of linux
+Similarly like apt is package installer for ubuntu, dnf is package manager for centos, rhel and fedora, yum is for redhat, and pacman is for arch linux and manjaro  and portage is for gentoo flavour of linux
 
 RHEL world → dnf / yum
 Arch world → pacman
@@ -474,7 +441,7 @@ Redhat -> rpm
 
 >> One of the reasons linux got famous is because we could add multiple users in it
 
-Like in below image, there is a ghar/house which is like our system. sudo is the papa of the system, we need their permission to do anything. And ubuntu and jethalal are its users. We can create multiple users
+Like in below image, there is a house which is like our system. sudo is the papa of the system, we need their permission to do anything. And ubuntu and jethalal are its users. We can create multiple users
 
 <img width="972" height="585" alt="Screenshot 2025-11-29 at 19 07 39" src="https://github.com/user-attachments/assets/2bd706a4-37a2-4681-aaec-c6b1e12a6c02" />
 
@@ -540,20 +507,19 @@ cat /etc/group      # and we can see groups using below command/path
 sudo groupadd dev        # adding group
 cat /etc/group         # to get the list of groups
   
-sudo groupadd qa
-cat /etc/group
+$ sudo groupadd qa
+$ cat /etc/group
 
 % sudo gpasswd -a jethalal dev     # -a flag is to append the users and add user to group, so here we are adding jethalal to 'dev' group
 
-   67  cat /etc/group                       
-   69  sudo gpasswd -M babita,tappu  dev      # to add single user we use -a flag but to add multiple users we use -M
-   70  cat /etc/group
+% cat /etc/group                       
+% sudo gpasswd -M babita,tappu  dev      # to add single user we use -a flag but to add multiple users we use -M
+%cat /etc/group
        
-   72  sudo gpasswd -M daya,bhide qa
-   73  cat /etc/group
-   74  sudo gpasswd -aG jethalal qa
-   
-   75  sudo usermod -aG dev jethalal          # if there exists some members in dev group and you want to add another user without deleting the list the this is also a way
+% sudo gpasswd -M daya,bhide qa          
+% cat /etc/group
+% sudo gpasswd -aG jethalal qa             
+% sudo usermod -aG dev jethalal          # if there exists some members in dev group and you want to add another user without deleting the list then we use -G flag. Remember dev is grouname here and jethalal is user to be added in that group.
 
    % sudo groupdel qa     # to delete a group
 
@@ -575,9 +541,11 @@ ubuntu@ip-172-31-71-36:~$ ls -l
 total 0
 -rw-rw-r-- 1 jethalal dev 0 Nov 30 04:03 file1
 
+# ZIP and UNZIP
+
 ubuntu@ip-172-31-71-36:~$ ls
 file1  file2.txt  heythere
-ubuntu@ip-172-31-71-36:~$ zip -r  zip.file heythere/                       # if 
+ubuntu@ip-172-31-71-36:~$ zip -r  zip.file heythere/       
   adding: heythere/ (stored 0%)
 ubuntu@ip-172-31-71-36:~$ ls -l
 total 12
@@ -597,14 +565,13 @@ drwxrwxr-x 2 ubuntu   ubuntu 4096 Nov 30 04:10 heythere
 
 1 Dec 2025
 
-grep by default = basic regular expressions (BRE) → old, limited syntax
-grep -E = extended regular expressions (ERE) → modern, powerful syntax
-grep -E is exactly the same as the command egrep (which is now deprecated)
+grep by default is basic regular expressions (BRE) → old, limited syntax
+grep -E = extended regular expressions (ERE) → modern, powerful syntax. grep -E is exactly the same as the command egrep (which is now deprecated)
 
-aws --version | grep -E "aws-cli/2"even plain grep "aws-cli/2" would work, but everyone writes grep -E out of habit because 90 % of the time they also use  or + in the same line. So yes — keep using grep -E. It’s the standard today.
+aws --version | grep -E "aws-cli/2".E ven plain grep "aws-cli/2" would work, but everyone writes grep -E out of habit because 90 % of the time they also use  or + in the same line. So yes — keep using grep -E. It’s the standard today.
 
 with egrep you can search for more than one strings at the same time. 
-For eg: egrep "key1|key2?\key3" node.sh
+For eg: egrep "key1|key2|key3" node.sh
 
 Command,What it removes,Does it delete config files?,Typical use case
 sudo apt remove awscli,Only the program binaries and files,No,Keep config if you plan to reinstall later
@@ -632,11 +599,10 @@ aws  awscliv2.zip  demo  demo.tar.gz  zip_demo.zip
 
 We need to give the name of compressed file we want plus the .tar.gz extension. 
 
-ubuntu@ip-172-31-68-151:~/demo1$ tar -xvzf demo.tar.gz
+$ tar -xvzf demo.tar.gz
 demo/
-ubuntu@ip-172-31-68-151:~/demo1$ ls
+$ ls
 demo  demo.tar.gz
-ubuntu@ip-172-31-68-151:~/demo1$
 
 Here in above commands to extract we use -x flag. -v is to print the info on screen while zipping or extracting.
 
@@ -646,8 +612,8 @@ Here in above commands to extract we use -x flag. -v is to print the info on scr
 
 $ scp -i "path of .pem key" secret_file.txt(source) ubuntu@ec2-3-15-221-86.us-east-2.compute.amazonaws.com: home/ubuntu(destination: which folder to copy in destination)
 
-Remember: The ssh file/folder is not created by the installation, but upon the first use of ssh or ssh-keygen. If it is not there, there is nothing to worry about. You can simply create it using mkdir ~/.ssh/.
-Check here for the .ssh directory in here /home/your-username/.ssh. So to find it do ls -a | grep .ssh in your current location as seen in the image.
+Remember: The ssh file/folder is not created upon installation. It is created upon the first use of ssh or ssh-keygen. If it is not there, there is nothing to worry about. You can simply create it using mkdir ~/.ssh/.
+Check here for the .ssh directory in /home/your-username/.ssh. So to find it do ls -a | grep .ssh in your current location as seen in the image.
 
 % scp -i "path to .pem file" -r ubuntu@ec2-3-15-221
 -86.us-east-2.compute.amazonaws.com:/home/ubuntu/linux_for_devops
@@ -655,41 +621,16 @@ Check here for the .ssh directory in here /home/your-username/.ssh. So to find i
  % scp -i "/Users/manjiri/Documents/Devops/new-aws-account.pem" /Users/manjiri/Documents/Devops/shell-scripting/quick_installation.sh ubuntu@ec2-18-207-160-88.compute-1.amazonaws.com:/home/ubuntu/scp_test
 quick_installation.sh                                                                                                           100% 9469    46.5KB/s   00:00
 
->> Its important to provide the path in which you want to copy the contents in destination server, means the part after :
+>> Its important to provide the path in which you want to copy the contents in destination server, means the part after ':'
 
 % rsync   
 
-Note: rsync is command used to rsync the folder which is already copied to the remote machine but now as there are changes in local we want to rsync it. Google its syntax.
-
-3 Dec 2025
+Note: rsync is command used to re-sync the folder which is already copied to the remote machine but now as there are changes in local we want to resync it. Google its syntax.
 
 ---
 Question: Difference between ping, curl and wget
 
 Say if application is not running, then we try to ping the ec2 server first. It tells if data is being transferred to and from from the server.
-
-Zombie process: A child process finishes execution. The OS keeps: PID, Exit code, Resource usage. Parent process is supposed to call wait() to collect that. Parent does NOT call wait().
-Result: Zombie process (state = Z).
-In short- The process is dead. The record of its death is what’s still alive.
-
-What zombies DO and DO NOT do
-
-✅ They do occupy a PID
-❌ They do NOT use CPU
-❌ They do NOT use memory (except 1 tiny table entry)
-❌ They do NOT execute code
-
-So:
-
-One or two zombies = harmless
-Thousands of zombies = PID exhaustion → system can’t spawn new processes → outage
-
-% ps aux | awk '$8=="Z"'
-
-% ps -el | grep Z
-
----
-5 December 2025
 
 ---
 
@@ -697,98 +638,31 @@ Thousands of zombies = PID exhaustion → system can’t spawn new processes →
 
 What ping actually does
 
-Ping sends ICMP Echo Request packets to a target (ICMP = Internet Control Message Protocol.)
-and waits for ICMP Echo Reply packets in return.
-
-That’s it.
-
-No TCP, no ports, no “checking server health.”
+Ping sends ICMP Echo Request packets to a target (ICMP = Internet Control Message Protocol.) and waits for ICMP Echo Reply packets in return. That’s it. No TCP, no ports, no “checking server health.”
 Just: “Hey, are you there?” → “Yes.”
 
-What ping proves
+What ping proves: If ping succeeds: 1) Network path exists between you and target. 2) ICMP is allowed by firewalls/security groups. 3) The target network stack is alive. 4) Round-trip latency (ms).
 
-If ping succeeds:
+What ping does NOT prove: Ping does NOT guarantee:1) The machine is fully healthy 2) Any application/port is running 3) CPU/memory are fine 4) Disk isn’t full 5) Website works 6) SSH will be accessible
+7) Load balancer is OK 8) AWS EC2 status checks are passed . Ping only checks ICMP replies, nothing more.
 
-Network path exists between you and target.
-
-ICMP is allowed by firewalls/security groups.
-
-The target network stack is alive.
-
-Round-trip latency (ms).
-
-What ping does NOT prove
-
-This is where people get it wrong.
-
-Ping does NOT guarantee:
-
-The machine is fully healthy
-
-Any application/port is running
-
-CPU/memory are fine
-
-Disk isn’t full
-
-Website works
-
-SSH will be accessible
-
-Load balancer is OK
-
-AWS EC2 status checks are passed
-
-Ping only checks ICMP replies, nothing more.
-
-Why ping often fails (even when the server is fine)
-
-Because:
-
-Firewalls block ICMP
-
-AWS security groups block ICMP by default
-
-Corporate networks drop ICMP
-
-Some operating systems rate-limit ICMP
-
-Some hosts disable ICMP for “security”
-
-So “no ping” does not always mean “server is down.”
+Why ping often fails (even when the server is fine)- Because: Firewalls block ICMP, AWS security groups block ICMP by default , Corporate networks drop ICMP, Some operating systems rate-limit ICMP, Some hosts disable ICMP for “security”. So “no ping” does not always mean “server is down.”
 
 # Netstat:  
 
 Netstat: Show you what network connections, ports, and sockets your system is actually using.
 
-What netstat actually does
-
-It tells you:
-
-Which ports are open
-
-Which processes are using those ports
-
-All active TCP/UDP connections
-
-Routing table
-
-Network interface stats
+What netstat actually does -It tells you: 1) Which ports are open 2) Which processes are using those ports 3) All active TCP/UDP connections 4) Routing table 5) Network interface stats
 
 In short:
 It tells you who is talking to whom, on which port, and over what protocol.
 
 % netstat -tulnp
 t → TCP
-
 u → UDP
-
 l → Listening only
-
 n → Show numbers (no DNS resolution)
-
 p → Which process owns the port
-
 % netstat -ant   # shows active connections
 
 ubuntu@ip-172-31-65-67:~$ netstat
@@ -818,7 +692,7 @@ Equivalent command:
 Netid                       State                        Recv-Q                       Send-Q                                                 Local Address:Port                                             Peer Address:Port                      Process
 udp                         UNCONN                       0                            0                                                          127.0.0.1:323                                                   0.0.0.0:*
 
-% ss   # can also be run separately
+% ss   # can also be ran standalone
 
 $ sudo lsof -i :8080    -- this gives the application and the port it is using
 
@@ -841,13 +715,10 @@ If the IP starts with any of these, it's private:
 192.168.0.0 – 192.168.255.255
 
 ✔ Everything else is public.
-How to check quickly Just look at the IP shown under inet.
+How to check quickly?:Just look at the IP shown under inet.
 
-% traceroute linkedin.com  % gives 
-
-% traceroute linkedin.com
-
-Note: Both commands show the exact network path (hops) your packet takes from your machine to a destination (like google.com). They help you see where latency, packet loss, or routing issues are happening.
+# This commands show the exact network path (hops) your packet takes from your machine to a destination (like google.com). They help you see where latency, packet loss, or routing issues are happening.
+% traceroute linkedin.com 
 
 % mtr google.com      # it is combination of ping+ traceroute , MTR= my trace route. It is used for network troubleshooting.
 
@@ -865,32 +736,31 @@ You're checking if the problem is your system, your ISP, or the destination.
 nslookup is a DNS-debug tool.
 
 1. Convert domain → IP (forward lookup)
-nslookup google.com
 
+% nslookup google.com
+Server:		192.168.1.1
+Address:	192.168.1.1#53
 
-Output:
+Non-authoritative answer:
+Name:	google.com
+Address: 142.250.207.206
 
-DNS server used
+% nslookup github.com
+Server:		192.168.1.1
+Address:	192.168.1.1#53
 
-IP address of google.com
+Non-authoritative answer:
+Name:	github.com
+Address: 20.207.73.82
 
-Use this when:
-
-You want to check if DNS is resolving correctly.
-
-A website isn’t loading and you want to confirm the IP is reachable.
+Use this when: 1) You want to check if DNS is resolving correctly. 2) A website isn’t loading and you want to confirm the IP is reachable.
 
 2. Convert IP → domain (reverse lookup)
 nslookup 8.8.8.8
 
-
 This resolves PTR records.
 
-Use this when:
-
-You want to identify who owns an IP.
-
-Debugging server misconfigurations, email issues, logging, etc.
+Use this when: 1) You want to identify who owns an IP. 2) Debugging server misconfigurations, email issues, logging, etc.
 
 ~$ nslookup trainwithshubham.com
 Server:		127.0.0.53
@@ -910,7 +780,24 @@ $ telnet trainwithshubham.com 80
 Trying 15.197.225.128...
 Connected to trainwithshubham.com.
 
-% hostname: gives you IP address of your server
+Zombie process: A child process finishes execution. The OS keeps: PID, Exit code, Resource usage. Parent process is supposed to call wait() to collect that. Parent does NOT call wait().
+Result: Zombie process (state = Z).
+In short- The process is dead. The record of its death is what’s still alive.
+
+What zombies DO and DO NOT do:
+✅ They occupy a PID
+❌ They do NOT use CPU
+❌ They do NOT use memory (except 1 tiny table entry)
+❌ They do NOT execute code
+
+So:
+One or two zombies = harmless
+Thousands of zombies = PID exhaustion → system can’t spawn new processes → outage
+
+% ps aux | awk '$8=="Z"'
+
+# Here -e is used to select all processes, l is used to display BSD long format
+% ps -el | grep Z 
 
 $ cat /etc/hosts - Has all the hosts list
 
@@ -962,7 +849,7 @@ $ whois trainwithshubham.com
    Registrar: GoDaddy.com, LLC
    Registrar IANA ID: 146
 
-% arp -- # ADdress resolution protocol, it is used to find MAC address of a server
+% arp -- # Address resolution protocol, it is used to find MAC address of a server
 
 % ifplugstatus  # tells us if your internet interfaces are working or not
 
@@ -982,13 +869,13 @@ curl -X GET https://dummy.restapiexample.com/api/v1/employees | jq
 
 # wget
 
-Is used td download a file from internet.
+Is used to download a file from internet.
 
 $ wget https://imgs.search.brave.com/dzH3dPFS7ktS-zQ4jlDdVkI91zmnx1OWnJLEthgXCQQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9ibG9n/LmxpcHN1bWh1Yi5j/b20vd3AtY29udGVu/dC91cGxvYWRzLzIw/MjQvMTIvc2FtcGxl/LWR1bW15LWFwaS1m/b3ItdGVzdGluZy1s/aXBzdW1odWIuanBn
 
 # Ip tables: 
 
-iptables is the firewall rule engine on Linux. It decides what network traffic is allowed, blocked, or modified. (For more info refere manual and internet while using the comman)
+iptables is the firewall rule engine on Linux. It decides what network traffic is allowed, blocked, or modified. (For more info refere manual and internet while using the command)
 
 Three core chains matter:
 
@@ -1027,29 +914,11 @@ ps aux gives PPID as well. The two commands differ slightly in output columns.
 ps aux → human readable
 ps -ef → scripting + parent-child tracing
 
-You get:
-
-CPU%
-
-MEM%
-
-COMMAND (full command)
-
-TTY
-
-STAT
+You get: CPU%, MEM%, COMMAND (full command),TTY, STAT
 
 Example output is compact and easier to scan visually.
 
-Best for:
-
-Quickly spotting high CPU processes
-
-Finding zombies (STAT = Z)
-
-Checking memory hogs
-
-Seeing interactive programs tied to terminals
+Best for: Quickly spotting high CPU processes, Finding zombies (STAT = Z), Checking memory hogs, Seeing interactive programs tied to terminals
 
 Use cases
 
@@ -1063,29 +932,11 @@ ps aux | grep Z
 
 ps -ef is System V style.
 
-You get:
-
-UID
-
-PID
-
-PPID
-
-Start time
-
-Full command
-
-Exact process hierarchy (parent-child relationships)
+You get: UID, PID, PPID, Start time, Full command, Exact process hierarchy (parent-child relationships)
 
 It’s more consistent for scripting because fields don’t shift around.
 
-Best for:
-
-kill scripts
-
-finding parent processes
-
-process tree investigation
+Best for: kill scripts, finding parent processes, process tree investigation
 
 Use cases
 
@@ -1134,7 +985,21 @@ MiB Swap:      0.0 total,      0.0 free,      0.0 used.    551.9 avail Mem
 ----
 To get the OS or kernel details use below commands:
 
+$ hostnamectl:
+
 $ hostnamectl
+ Static hostname: master
+       Icon name: computer-vm
+         Chassis: vm
+      Machine ID: ceac46b4ea4f436d99b1e7c0b777991a
+         Boot ID: ea38c4528141457c8945aec9ec9c5854
+  Virtualization: vmware
+Operating System: Ubuntu 22.04.3 LTS
+          Kernel: Linux 5.15.0-91-generic
+    Architecture: x86-64
+ Hardware Vendor: VMware, Inc.
+  Hardware Model: VMware Virtual Platform
+
 $ hostname -a
 
 -----
@@ -1146,7 +1011,6 @@ df -h       # gives report file system disk space usage
 free -h     # free displays the total amount of free and used physical and swap memory in the system, as well as the buffers and caches used by the kernel
 
 # du -h       ... Summarize disk usage of the set of FILEs, recursively for directories
-
 
 ----
 
@@ -1265,6 +1129,7 @@ Su Mo Tu We Th Fr Sa
 $ echo hello good day!      # echo is used to print, that’s it, nothing else.
 hello good day!
  As below using ’type’ we can see whether the command is internal (builtin) or external(hashed)
+ 
 ubuntu@ip-172-31-69-95:~$ type date
 date is /usr/bin/date
 ubuntu@ip-172-31-69-95:~$ type pwd
@@ -1305,7 +1170,7 @@ That is why we always get the output or else error for the command we enter on c
 
 <img width="1424" height="785" alt="image" src="https://github.com/user-attachments/assets/8b19c140-5413-44c4-a078-c1e99b8fd9e2" />
 
-Note: Every command is a program and program becomes process. So Operatng system loader loads the say date program into the memory and converts it into process. And process prints output and once done process gets exited.
+Note: Every command is a program and program becomes process. So Operatng system loader loads say date program into the memory and converts it into process. And process prints output and once done process gets exited.
 
 > This overrites the file
 >> This appends the file
@@ -1347,7 +1212,7 @@ To combine the functionality of multiple commands.
 To create concise and efficient command-line workflows.
 
 echo $USER
-whoami gives username on terminal but if we want to use it as variable value then we use $USER
+whoami gives username on terminal but if we want to use it as variable value then we use $USER. It is used in shell.
 
 ---
 
@@ -1394,48 +1259,13 @@ ubuntu@ip-172-31-24-109:~$ free
            total        used        free      shared  buff/cache   available
 Mem: 980368 433736 91160 936 638084 546632 Swap: 0 0 0
 
-$ df
 
-Filesystem 1K-blocks Used Available Use% Mounted on
-
-/dev/root 7034376 5506464 1511528 79% /
-
-tmpfs 490184 0 490184 0% /dev/shm
-
-tmpfs 196076 920 195156 1% /run
-
-tmpfs 5120 0 5120 0% /run/lock
-
-/dev/xvda16 901520 152308 686084 19% /boot
-
-/dev/xvda15 106832 6250 100582 6% /boot/efi
-
-tmpfs 98036 12 98024 1% /run/user/1000
-
-$ top
-
-top - 04:23:51 up 2 days, 12:12, 1 user, load average: 0.00, 0.00, 0.00
-
-Tasks: 108 total, 1 running, 107 sleeping, 0 stopped, 0 zombie
-
-%Cpu(s): 0.3 us, 0.3 sy, 0.0 ni, 95.3 id, 0.0 wa, 0.0 hi, 0.0 si, 4.0 st
-
-MiB Mem : 957.4 total, 89.0 free, 423.2 used, 623.5 buff/cache
-
-MiB Swap: 0.0 total, 0.0 free, 0.0 used. 534.2 avail Mem
-
-PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
-65565 root 20 0 1727996 24004 9600 S 0.3 2.4 1:53.53 containerd
-
-75481 ubuntu 20 0 14992 7072 5120 S 0.3 0.7 0:00.05 sshd 1 root 20 0 22676 12928 8704 S 0.0 1.3 0:10.88 systemd
-2 root 20 0 0 0 0 S 0.0 0.0 0:00.01 kthreadd 3 root 20 0 0 0 0 S 0.0 0.0 0:00.00 pool_workqueue_release
-
-Blackers faced and its solution:
+Blockers faced and its solution:
 
 Error: Docker containers were not getting created due to insufficient space.
 Troubelshooting steps:
 
-Checked disk space: df -h -> /dev/root was 100% used Then to find what is consuming the space ran: du -xh / --max-depth=1 | sort -rh -> This command checks in root (/) which directories are consuming highest size and lists them.
+Checked disk space: df -h -> /dev/root was 100% used Then to find what is consuming the space ran: du -xh / --max-depth=1 | sort -rh | top -n 10 -> This command checks in root (/) which directories are consuming highest size and lists them.
 
 .minikube and .kube were consuming the most space. Almost 90%. -> I was not actively using minikube hence deleted it, removed its dependent directories.
 
