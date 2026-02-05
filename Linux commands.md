@@ -696,6 +696,59 @@ udp                         UNCONN                       0                      
 
 $ sudo lsof -i :8080    -- this gives the application and the port it is using
 
+1. Find what's using a specific port
+$ lsof -i :5000
+Shows which process is listening on port 5000.
+
+2. List all network connections
+$ lsof -i
+Shows all processes with active network connections.
+
+3. Find all files opened by a user
+$ lsof -u username
+Lists every file a specific user has open.
+
+4. Find what files a process is using
+$ lsof -p 1234
+Shows all files opened by process ID 1234.
+
+5. Find which process is using a file
+$ lsof /var/log/syslog
+Shows which process has this file open.
+
+6. List all TCP connections
+$ lsof -i TCP
+Shows only TCP network connections.
+
+7. Find all UDP connections
+$ lsof -i UDP
+Shows only UDP network connections.
+
+8. List files opened by a specific command
+$ lsof -c nginx
+Shows all files opened by nginx processes.
+
+9. Find deleted files still using disk space
+$ lsof | grep deleted
+Shows deleted files that processes still have open (eating disk space).
+
+10. List all IPv4 connections
+$ lsof -i 4
+Shows only IPv4 network connections.
+
+11. Find who's accessing a directory
+$ lsof +D /var/log
+Shows all processes accessing files in this directory.
+
+12. Monitor network activity in real-time
+$ lsof -i -r 2
+Refreshes every 2 seconds showing live network connections.
+
+Pro tip: Combine multiple flags for powerful debugging:
+$ lsof -u root -i TCP:80
+Shows all port 80 connections by root user.
+
+
 % ifconfig   # is interface configuration: Shows your network interface details (IP, MAC, status). Show me my network cards and their IP addresses.”
 
 ifconfig is deprecated.
