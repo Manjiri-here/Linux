@@ -532,11 +532,13 @@ $ cat /etc/group
    If we have to change owner:
 
    ubuntu@ip-172-31-71-36:~$ sudo chown jethalal file1       # here we are changing owner of file1 to jethalal
+   
    ubuntu@ip-172-31-71-36:~$ ls -l
    total 0
    -rw-rw-r-- 1 jethalal ubuntu 0 Nov 30 04:03 file1
 
 ubuntu@ip-172-31-71-36:~$ sudo chgrp dev file1    # here we changed group to dev for file1
+
 ubuntu@ip-172-31-71-36:~$ ls -l
 total 0
 -rw-rw-r-- 1 jethalal dev 0 Nov 30 04:03 file1
