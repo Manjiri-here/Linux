@@ -545,16 +545,20 @@ total 0
 
 ubuntu@ip-172-31-71-36:~$ ls
 file1  file2.txt  heythere
+
 ubuntu@ip-172-31-71-36:~$ zip -r  zip.file heythere/       
   adding: heythere/ (stored 0%)
+  
 ubuntu@ip-172-31-71-36:~$ ls -l
 total 12
 -rw-rw-r-- 1 jethalal dev       0 Nov 30 04:03 file1
 -rw-rw-r-- 1 ubuntu   ubuntu   37 Nov 30 04:11 file2.txt
 drwxrwxr-x 2 ubuntu   ubuntu 4096 Nov 30 04:10 heythere
 -rw-rw-r-- 1 ubuntu   ubuntu  168 Nov 30 04:12 zip.file
+
 ubuntu@ip-172-31-71-36:~$ zip zip.file2 file1
   adding: file1 (stored 0%)
+  
 ubuntu@ip-172-31-71-36:~$ ls -l
 total 16
 -rw-rw-r-- 1 jethalal dev       0 Nov 30 04:03 file1
