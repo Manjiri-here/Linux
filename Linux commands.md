@@ -1,3 +1,7 @@
+Commands noted after April 2026
+
+$ hostnamectl  #gives detailed info about veersion, kernel, ect
+
 <img width="1152" height="1440" alt="image" src="https://github.com/user-attachments/assets/e0492829-e946-4824-9339-82c39207b201" />
 
 
